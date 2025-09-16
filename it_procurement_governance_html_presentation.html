@@ -1,401 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IT Procurement & Governance – Presentation</title>
-  <style>
-    :root {
-      --bg: #0b0f1a;
-      --card: #121826;
-      --text: #e7eefb;
-      --muted: #a9b8d3;
-      --accent: #4f8cff;
-      --accent-2: #7bd389;
-    }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 80% -10%, #1b2740 0%, var(--bg) 45%);
-      color: var(--text);
-      overflow: hidden;
-    }
-    /* Deck */
-    .deck { height: 100%; display: grid; grid-template-rows: 1fr auto; }
-    .slide {
-      display: none;
-      height: 100%;
-      padding: 64px 72px;
-      box-sizing: border-box;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
-    }
-    .slide.active { display: block; }
-
-    h1, h2, h3 { margin: 0 0 16px; line-height: 1.1; }
-    h1 { font-size: clamp(36px, 5vw, 56px); letter-spacing: 0.5px; }
-    h2 { font-size: clamp(28px, 4vw, 40px); color: var(--accent); }
-    h3 { font-size: clamp(18px, 4vw, 33px); color: var(--accent); }
-    p { color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
-    ul { margin: 16px 0 0 0; padding: 0 0 0 20px; }
-    li { margin: 8px 0; font-size: clamp(18px, 2.2vw, 22px); }
-
-    /* Header / Footer */
-    .topbar {
-      position: absolute; inset: 0 0 auto 0; height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 24px; box-sizing: border-box; pointer-events: none;
-    }
-    .logo {
-      width: 12px; height: 12px; border-radius: 4px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 0 0 6px rgba(79,140,255,0.08);
-    }
-    .brand { font-weight: 600; letter-spacing: 0.3px; color: #d7e3fb; font-size: 14px; opacity: .9; }
-
-    .controls {
-      height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)); backdrop-filter: blur(6px);
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .btns { display: flex; gap: 10px; }
-    button {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: #0f1626;
-      color: var(--text);
-      padding: 10px 14px;
-      font-size: 14px;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-    button:hover { border-color: rgba(255,255,255,0.3); }
-    .hint { color: var(--muted); font-size: 13px; }
-
-    /* Progress */
-    .progress { position: relative; height: 6px; flex: 1; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
-    .bar { position: absolute; inset: 0 auto 0 0; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow: 0 0 20px rgba(79,140,255,0.35); }
-
-    /* Title slide extras */
-    .title h1 { font-size: clamp(44px, 7vw, 72px); }
-    .subtitle { margin-top: 10px; font-size: clamp(18px, 2.2vw, 22px); color: #c7d6f4; }
-    .byline { margin-top: 24px; font-size: 16px; color: var(--muted); }
-
-    /* Print / export */
-    @media print {
-      body { overflow: visible; }
-      .deck { display: block; }
-      .slide { display: block; break-after: page; height: auto; }
-      .controls, .topbar { display: none; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Procurement & Governance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .authors {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .author {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .content {
+            display: flex;
+            height: 600px;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #f5f7fa;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #e0e6ed;
+        }
+        
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4ca1af;
+        }
+        
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-item:hover {
+            background: #e3e8f0;
+        }
+        
+        .nav-item.active {
+            background: #4ca1af;
+            color: white;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4ca1af;
+        }
+        
+        p, li {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: #f8fafc;
+            border-left: 4px solid #4ca1af;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+        
+        .job-card {
+            background: white;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .job-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .salary {
+            color: #4ca1af;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .interview-card {
+            background: white;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quote {
+            font-style: italic;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4ca1af;
+        }
+        
+        .quiz-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .option {
+            padding: 12px;
+            background: white;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background: #edf2f7;
+        }
+        
+        .option.selected {
+            background: #4ca1af;
+            color: white;
+            border-color: #4ca1af;
+        }
+        
+        .option.correct {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .option.incorrect {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: #4ca1af;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #3a8d9c;
+            transform: translateY(-2px);
+        }
+        
+        #quiz-results {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border-top: 1px solid #e0e6ed;
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e0e6ed;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="deck" id="deck">
-    <div class="topbar">
-      <div class="logo" aria-hidden="true"></div>
-      <div class="brand">IT Procurement & Governance</div>
+    <div class="container">
+        <header>
+            <h1>Explore the IT Field - Procurement & Governance</h1>
+            <div class="subtitle">Understanding the backbone of organizational technology management</div>
+            <div class="authors">
+                <div class="author">Mohammad Ansarii</div>
+                <div class="author">Jasmine Carvalho</div>
+                <div class="author">Everett Clayton-Skinner</div>
+                <div class="author">Juan Talome</div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="sidebar">
+                <h3>Presentation Sections</h3>
+                <div class="nav-item active" data-target="section1">
+                    <i class="fas fa-info-circle"></i> What is this IT field?
+                </div>
+                <div class="nav-item" data-target="section2">
+                    <i class="fas fa-briefcase"></i> Career Exploration
+                </div>
+                <div class="nav-item" data-target="section3">
+                    <i class="fas fa-user-tie"></i> Professional Interviews
+                </div>
+                <div class="nav-item" data-target="section4">
+                    <i class="fas fa-gamepad"></i> Interactive Quiz
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="section active" id="section1">
+                    <h2>What is this IT field?</h2>
+                    <h3>What is IT Procurement/Governance?</h3>
+                    <p>IT Governance is a framework of policies, processes, and structures that ensures an organization's IT investment aligns with its business goals, creates value, and manages risks effectively.</p>
+                    <div class="card">
+                        Think of this as a rule book for how it needs to be run in a company.
+                    </div>
+                    <p>IT procurement is a process of researching, selecting, purchasing, and implementing technology such as hardware, software, and services according to the IT Governance.</p>
+                    <div class="card">
+                        Think of this as actively buying IT the proper way.
+                    </div>
+                    
+                    <h3>Roles in Organizations</h3>
+                    <p>The primary role of IT Procurement and Governance is to link business strategies and technology. It ensures that:</p>
+                    <ul>
+                        <li>Money is well spent and is not wasted on unnecessary technology.</li>
+                        <li>The company is protected from IT-related risks like breaches, data loss, and system failures.</li>
+                        <li>The organization is complying with laws such as HIPAA and GDPR.</li>
+                        <li>The operations are working, which means IT services are reliable, consistent, and aligned with the business's needs.</li>
+                    </ul>
+                    
+                    <h3>What are some of the daily activities and responsibilities?</h3>
+                    <p>Professionals in this field are responsible for:</p>
+                    <ul>
+                        <li>Determine objectives and strategy for IT in an organization</li>
+                        <li>Design, implement, and maintain an IT governance framework</li>
+                        <li>Ensure compliance, ensuring that IT meets any regulatory, statutory, and legal obligations, supports the organization's objectives while working within the defined ethical and cultural framework, and follows the IT governance framework.</li>
+                    </ul>
+                </div>
+                
+                <div class="section" id="section2">
+                    <h2>Career Exploration in IT Procurement & Governance</h2>
+                    <p>Here are the five job titles I found:</p>
+                    
+                    <div class="job-card">
+                        <div class="job-title">IT Sourcing Specialist</div>
+                        <div class="salary">Salary Range: $83K - $105K</div>
+                        <p><strong>Role Description:</strong> Leads the process of finding, evaluating, and selecting new technology vendors and negotiating agreements.</p>
+                        <p><strong>Required Skills:</strong></p>
+                        <ul>
+                            <li>Strong understanding of sourcing processes, supplier evaluation, and basic contract terms related to SaaS, software, and cloud services.</li>
+                            <li>Capable of managing vendor relationships</li>
+                            <li>Strong negotiation, contract management, and project management skills</li>
+                            <li>Excellent social and stakeholder management skills across technical and operational teams</li>
+                            <li>Experience using sourcing and procurement platforms like SAP Ariba, Coupa, or Jaggaer</li>
+                            <li>Strong analytical and problem-solving skills</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="job-card">
+                        <div class="job-title">IT Vendor Relations Administrator</div>
+                        <div class="salary">Salary range: $81K - $110K</div>
+                        <p><strong>Role Description:</strong> Focus on the administrative and operational part of existing vendor relationships and contracts.</p>
+                        <p><strong>Required skills:</strong></p>
+                        <ul>
+                            <li>Data analysis (Power BI, financial, and operational)</li>
+                            <li>Track IT expenses, vendor payments, and find cost-saving opportunities</li>
+                            <li>Manage contracts, renewals, and compliance</li>
+                            <li>Proficiency in Excel and ERP systems</li>
+                            <li>Analytical and problem-solving skills</li>
+                            <li>Communication and attention to detail</li>
+                            <li>Able to work on your own and in a team</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="job-card">
+                        <div class="job-title">IT Financial Application Analyst</div>
+                        <div class="salary">Salary range: $75 - $85K</div>
+                        <p><strong>Role Description:</strong> Intersects with IT, finance, and procurement, focusing on the systems that manage financial data and processes</p>
+                        <p><strong>Required skills:</strong></p>
+                        <ul>
+                            <li>Able to analyze complex data, identify trends, and develop solutions to support decision-making</li>
+                            <li>Strong verbal and communication skills with multidisciplinary teams and end users</li>
+                            <li>Advanced analytical skills with a focus on problem solving, process improvement, and workflow optimization</li>
+                            <li>Ability to collaborate across departments and communicate technical solutions</li>
+                            <li>Knowledge of financial regulations, healthcare compliance standards, and data security best practices, ensuring agreement to industry requirements</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="job-card">
+                        <div class="job-title">IT Governance Analyst</div>
+                        <div class="salary">Salary range: $93K - $114K</div>
+                        <p><strong>Role Description:</strong> Ensures IT polices and processes align with the organization's goals and compliance requirements.</p>
+                        <p><strong>Required skills:</strong></p>
+                        <ul>
+                            <li>Familiar with Capital Planning and Investment Control</li>
+                            <li>Capable of gathering, organizing, and analyzing information and data from multiple sources</li>
+                            <li>Able to work under pressure with tight deadlines and multitasking in a challenging environment</li>
+                            <li>Excellent skills with people and able to work in teams</li>
+                            <li>Previous experience with implementing Exterprise IT Governance Framework</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="job-card">
+                        <div class="job-title">IT Procurement and Vendor Management</div>
+                        <div class="salary">Salary range: $111K - $190K</div>
+                        <p><strong>Role Description:</strong> Responsible for setting up strategies for how an organization will acquire and manage all of its technology vendors</p>
+                        <p><strong>Required skills:</strong></p>
+                        <ul>
+                            <li>Leadership and team performance management skills</li>
+                            <li>Strategic planning for procurement, category, and supplier management</li>
+                            <li>Communication and influencing skills</li>
+                            <li>Data analysis and reporting expertise</li>
+                            <li>Problem-solving skills for complicated vendor matters</li>
+                            <li>Extensive knowledge of vendor contracts, commercial/legal terms</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Recommended Certifications</h3>
+                    <p>While not all were required to have certifications, the most common certifications include:</p>
+                    <ul>
+                        <li>Certified Professional in Supply Management (CPSM)</li>
+                        <li>ITIL 4 Foundation</li>
+                        <li>Certified Information Systems Auditor</li>
+                        <li>Vendor Management certifications from Coupa or SAP Ariba</li>
+                    </ul>
+                </div>
+                
+                <div class="section" id="section3">
+                    <h2>Professional Interviews</h2>
+                    <p>While we were unable to secure interviews with professionals specializing in IT Procurement and Governance within our timeframe, we were able to secure interviews related to IT support and administration roles. Their journey and advice are still valuable because they are essential to the IT Procurement and Governance process. They are the ones who request supplies that the organization requires and work with governance policies every day, ensuring that the technology is compliant and secure.</p>
+                    
+                    <div class="interview-card">
+                        <h3>Organization: IT Support LA</h3>
+                        <p><strong>Name:</strong> Andres Ortega</p>
+                        <p><strong>Job Position:</strong> Office Administrator</p>
+                        
+                        <h4>Career Journey and Daily Work</h4>
+                        <p>In my interview with Andre, she told me that his journey into the IT industry was not straightforward. He stated that he got his degree in economics and worked as a financial analyst for 4 years. He noticed he liked solving technical problems and working with data tools at his job, so he decided to apply as an office administrator. In terms of daily work, he stated his duties consist of answering phones and performing administrative tasks while assisting his team with technical support.</p>
+                        
+                        <h4>Advice</h4>
+                        <div class="quote">
+                            "the best advice I can give to students would be to stay up to date with technology and new trends since the technology field is changing everyday"
+                        </div>
+                        <p>He emphasized that if students do this they will be more ready and prepared which will help them to be a strong candidate when applying for new job positions.</p>
+                    </div>
+                    
+                    <div class="interview-card">
+                        <h3>Organization: LAUSD Information Technology Services</h3>
+                        <p><strong>Name:</strong> Michael Manzo</p>
+                        <p><strong>Job Position:</strong> IT Helpdesk</p>
+                        
+                        <h4>Career Journey and Daily Work</h4>
+                        <p>After interviewing Michael, he told me that his journey into IT started when he found a passion for technology after taking a web design course in high school. Because of this, he decided to join a community college and get an associate's degree in business administration. With his degree and CompTIA A+ certificate, he got accepted into his current position, where he assists the Los Angeles school district by helping people with IT support. He stated that his primary job duties include answering calls and chats from employees, students, and families while providing technical training and guidance.</p>
+                        
+                        <h4>Advice</h4>
+                        <div class="quote">
+                            "Networking has been the most beneficial thing that has helped me in my career."
+                        </div>
+                        <p>He gave the example of a time in community college where he attended events, and in one of those events, he took advantage of it and found his current job position. He also recommended certifications since these can help students meet industry standards and apply for the job positions they are interested in.</p>
+                    </div>
+                </div>
+                
+                <div class="section" id="section4">
+                    <h2>Interactive Quiz</h2>
+                    <p>Test your knowledge about IT Procurement & Governance with this interactive quiz!</p>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <p>1. What is the simplest way to define IT Governance?</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">Manage the company's IT framework</div>
+                                <div class="option" data-correct="true">The rulebook for how IT should be run to meet business goals</div>
+                                <div class="option" data-correct="false">The process of building new software for customers</div>
+                                <div class="option" data-correct="false">Fixing broken computers</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <p>2. What is the primary role of IT Procurement & Governance in an organization?</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">To buy the cheapest technology out there</div>
+                                <div class="option" data-correct="false">Coding for the IT department</div>
+                                <div class="option" data-correct="true">Link business strategy and technology spending</div>
+                                <div class="option" data-correct="false">Slow down the process of purchasing new software</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <p>3. Which of these plays the key role of someone in the field?</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">Designing a video game</div>
+                                <div class="option" data-correct="true">Negotiating a contract with a new software vendor</div>
+                                <div class="option" data-correct="false">Installing operating systems on new laptops</div>
+                                <div class="option" data-correct="false">Repairing computer hardware</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <p>4. According to the professionals interviewed, what was their best advice for students?</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">Avoid networking events</div>
+                                <div class="option" data-correct="false">Specialize in outdated technologies</div>
+                                <div class="option" data-correct="false">Never work in teams</div>
+                                <div class="option" data-correct="true">Stay up to date with technology and get certifications</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <p>5. What salary range does an IT Governance Analyst typically earn?</p>
+                            <div class="options">
+                                <div class="option" data-correct="false">$40K – $60K</div>
+                                <div class="option" data-correct="false">$70K – $85K</div>
+                                <div class="option" data-correct="true">$93K – $114K</div>
+                                <div class="option" data-correct="false">$150K+</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-controls">
+                            <button id="reset-quiz">Reset Quiz</button>
+                            <button id="submit-quiz">Submit Answers</button>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-results">
+                        <h3>Quiz Results</h3>
+                        <div class="score">Your score: <span id="score-value">0</span>/5</div>
+                        <p id="results-feedback">Thanks for completing the quiz!</p>
+                        <button id="try-again">Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+            <button id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
     </div>
 
-    <!-- Slide 1: Title -->
-    <section class="slide title active" aria-roledescription="slide" aria-label="Title" style="text-align: center;">
-    <h1 style="margin-bottom: 20px;">IT Procurement & Governance</h1>
-    <p class="subtitle" style="margin-bottom: 40px;">How governments buy and manage technology — simply explained</p>
-    <div style="display: inline-block; text-align: center; line-height: 1.8;">
-      <p class="byline" style="font-size: 18px; margin: 6px 0;">Mohammad Ansari</p>
-      <p class="byline" style="font-size: 18px; margin: 6px 0;">Everett Clayton-Skinner</p>
-      <p class="byline" style="font-size: 18px; margin: 6px 0;">Jasmine Carvalho</p>
-      <p class="byline" style="font-size: 18px; margin: 6px 0;">Juan Talome</p>
-    </div>
-  </section>
-
-    <!-- Slide 2: What is IT Procurement & Governance? -->
-    <section class="slide" aria-roledescription="slide" aria-label="What is IT Procurement & Governance?">
-      <h2>What is IT Procurement & Governance?</h2>
-      <h3>Mohammad Ansari</h3>
-      <h3>Everett Clayton Skinner</h3>
-      <ul>
-        <li>The study of how governments buy and use technology.</li>
-        <li>Main goal: spend public money effectively and efficiently.</li>
-        <li>Includes hardware, software, cloud services, and IT support.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 3: What is IT Procurement? -->
-    <section class="slide" aria-roledescription="slide" aria-label="What is IT Procurement?">
-      <h2>What is IT Procurement?</h2>
-      <ul>
-        <li>Process of acquiring IT goods and services for government use.</li>
-        <li>Examples: computers, networks, cloud, data storage, IT consulting.</li>
-        <li>Guided by rules and regulations to prevent waste and corruption.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 4: What is IT Governance? -->
-    <section class="slide" aria-roledescription="slide" aria-label="What is IT Governance?">
-      <h2>What is IT Governance?</h2>
-      <ul>
-        <li>Control, accountability, and rules in IT decision‑making.</li>
-        <li>Aligns IT spending with public goals and outcomes.</li>
-        <li>Manages risks, security, and compliance.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 5: Why It Matters -->
-    <section class="slide" aria-roledescription="slide" aria-label="Why It Matters">
-      <h2>Why It Matters</h2>
-      <ul>
-        <li>Governments spend billions on IT — mistakes are costly.</li>
-        <li>Balance speed vs. accountability (tech moves fast, rules move slow).</li>
-        <li>Protects citizen data and security; builds public trust.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 6: Key Steps in IT Procurement -->
-    <section class="slide" aria-roledescription="slide" aria-label="Key Steps in IT Procurement">
-      <h2>Key Steps in IT Procurement</h2>
-      <ul>
-        <li><strong>Plan</strong> – Identify needs.</li>
-        <li><strong>Research</strong> – Check market and vendors.</li>
-        <li><strong>Define Requirements</strong> – Write what is needed.</li>
-        <li><strong>Solicit Bids</strong> – RFPs, tenders, or contracts.</li>
-        <li><strong>Evaluate & Award</strong> – Pick the best vendor.</li>
-        <li><strong>Manage Contract</strong> – Monitor performance and compliance.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 7: Challenges -->
-    <section class="slide" aria-roledescription="slide" aria-label="Challenges">
-      <h2>Challenges in IT Procurement/Governance</h2>
-      <ul>
-        <li>Complex rules — many laws and policies.</li>
-        <li>Cybersecurity risks — systems hold sensitive data.</li>
-        <li>Vendor lock‑in — hard to switch providers later.</li>
-        <li>Budget & delays — long approval processes.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 8: Why Good Governance Helps -->
-    <section class="slide" aria-roledescription="slide" aria-label="Why Good Governance Helps">
-      <h2>Why Good IT Governance Helps</h2>
-      <ul>
-        <li>Saves taxpayer money.</li>
-        <li>Ensures fair competition among vendors.</li>
-        <li>Improves public services and innovation.</li>
-        <li>Reduces risks of corruption, waste, and failure.</li>
-      </ul>
-    </section>
-
-    <!-- Slide 9 -->
-    <section class="slide">
-      <h2>Career Exploration in IT Procurement/Governance</h2>
-      <h3>Jasmine Carvalho</h3>
-      <p>We are going to take a look at some careers that are present in this field.</p>
-    </section>
-
-    <!-- Slide 10 -->
-    <section class="slide">
-      <h2>Senior Specialist, Sourcing - IT</h2>
-      <p><strong>Salary Range:</strong> $83K - $105K</p>
-      <ul>
-        <li>Understanding sourcing processes, supplier evaluation, SaaS/cloud contracts.</li>
-        <li>Manage vendor relationships.</li>
-        <li>Negotiation, contract, and project management skills.</li>
-        <li>Stakeholder management across technical and operational teams.</li>
-        <li>Experience with SAP Ariba, Coupa, or Jaggaer.</li>
-        <li>Strong analytical and problem-solving skills.</li>
-      </ul>
-      <a href="https://www.ziprecruiter.com/c/Sirius-XM-Radio/Job/Senior-Specialist,-Sourcing-IT/-in-San-Francisco,CA?jid=60f91e31f367199b" target="_blank">Job Link</a>
-    </section>
-
-    <!-- Slide 11 -->
-    <section class="slide">
-      <h2>IT Vendor Relations Administrator</h2>
-      <p><strong>Salary Range:</strong> $81K - $110K</p>
-      <ul>
-        <li>Data analysis (Power BI, financial, operational).</li>
-        <li>Track IT expenses, payments, find cost-saving opportunities.</li>
-        <li>Manage contracts, renewals, and compliance.</li>
-        <li>Proficient in Excel and ERP systems.</li>
-        <li>Strong analytical, problem-solving, and communication skills.</li>
-      </ul>
-      <a href="https://www.linkedin.com/jobs/view/it-vendor-relations-admnistrator-at-revelyst-4286542303/" target="_blank">Job Link</a>
-    </section>
-
-    <!-- Slide 12 -->
-    <section class="slide">
-      <h2>IT Financial Application Analyst</h2>
-      <p><strong>Salary Range:</strong> $75K - $85K</p>
-      <ul>
-        <li>Analyze complex data, identify trends, support decision-making.</li>
-        <li>Strong communication with multidisciplinary teams.</li>
-        <li>Focus on process improvement and workflow optimization.</li>
-        <li>Collaborate across departments, communicate technical solutions.</li>
-        <li>Knowledge of financial regulations, healthcare compliance, security practices.</li>
-      </ul>
-      <a href="https://www.ziprecruiter.com/jobs-search?search=IT+Financial+Analyst" target="_blank">Job Link</a>
-    </section>
-
-    <!-- Slide 13 -->
-    <section class="slide">
-      <h2>IT Governance Analyst</h2>
-      <p><strong>Salary Range:</strong> $93K - $114K</p>
-      <ul>
-        <li>Knowledge of Capital Planning and Investment Control.</li>
-        <li>Gather, organize, analyze data from multiple sources.</li>
-        <li>Work under pressure with tight deadlines.</li>
-        <li>Strong teamwork and interpersonal skills.</li>
-        <li>Experience implementing Enterprise IT Governance Frameworks.</li>
-      </ul>
-      <a href="https://www.ziprecruiter.com/c/Raye-IT-Consulting/Job/IT-Governance-Analyst/-in-Alexandria,VA?jid=d29a135717269e11" target="_blank">Job Link</a>
-    </section>
-
-    <!-- Slide 14 -->
-    <section class="slide">
-      <h2>IT Procurement & Vendor Management – Senior</h2>
-      <p><strong>Salary Range:</strong> $111K - $190K</p>
-      <ul>
-        <li>Leadership and performance management skills.</li>
-        <li>Strategic planning for procurement, category, supplier management.</li>
-        <li>Strong communication and influencing skills.</li>
-        <li>Data analysis and reporting expertise.</li>
-        <li>Problem-solving for complex vendor issues.</li>
-        <li>Knowledge of vendor contracts, commercial/legal terms.</li>
-      </ul>
-      <a href="https://careers.amfam.com/jobs/r36899/senior-manager-it-procurement-vendor-management/" target="_blank">Job Link</a>
-    </section>
-
-    <!-- Slide 15 -->
-    <section class="slide">
-      <h2>What is IT Governance?</h2>
-      <h3>Everett Clayton-Skinner</h3>
-      <p>We will revisit IT Governance and prepare for a short quiz.</p>
-    </section>
-
-    <!-- Slide 16 -->
-    <section class="slide">
-      <h2>IT Governance Components</h2>
-      <p>Combination of business strategy and governance components.</p>
-      <ul>
-        <li>Business Continuity</li>
-        <li>Financial Accountability</li>
-        <li>Regulatory Compliance</li>
-        <li>Risk Management</li>
-      </ul>
-      <a href="https://www.ibm.com/think/topics/it-governance" target="_blank">Source</a>
-    </section>
-
-    <!-- Slide 17 -->
-    <section class="slide">
-      <h2>Governance Frameworks</h2>
-      <ul>
-        <li><strong>ITIL:</strong> Best practices for IT service management.</li>
-        <li><strong>ITSM:</strong> Planning, implementing, managing IT services for user and business needs.</li>
-      </ul>
-      <a href="https://www.ibm.com/think/topics/it-governance" target="_blank">Source</a>
-    </section>
-
-    <!-- Slide 18 -->
-    <section class="slide">
-      <h2>Qualities of Governance Frameworks</h2>
-      <ul>
-        <li><strong>Cybersecurity:</strong> Protecting data, HIPAA, personal info.</li>
-        <li><strong>Disaster Recovery:</strong> Plans for data and system recovery.</li>
-      </ul>
-      <a href="https://www.ibm.com/think/topics/it-governance" target="_blank">Source</a>
-    </section>
-
-    <!-- Slide 19 -->
-    <section class="slide">
-      <h2>Daily IT Governance Responsibilities</h2>
-      <ul>
-        <li>Set objectives for IT with strategic planning.</li>
-        <li>Design and use an IT governance framework aligned with company goals.</li>
-        <li>Ensure ongoing compliance with laws and standards.</li>
-      </ul>
-      <a href="https://itchronicles.com/governance/it-governance-roles-responsibilities/" target="_blank">Source</a>
-    </section>
-
-    <section class="slide"><h2>Quiz Q1</h2><p>What is the main goal of IT Procurement & Governance?</p><ul><li>A. To increase private profits</li><li>B. To ensure public money is spent effectively</li><li>C. To remove all regulations</li><li>D. To eliminate technology use</li></ul></section>
-    <section class="slide"><h2>Answer Q1</h2><p>Correct Answer: <strong>B</strong> – To ensure public money is spent effectively.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q2</h2><p>Which of the following are examples of IT goods or services governments procure?</p><ul><li>A. Computers and networks</li><li>B. Cloud services</li><li>C. IT consulting</li><li>D. All of the above</li></ul></section>
-    <section class="slide"><h2>Answer Q2</h2><p>Correct Answer: <strong>D</strong> – All of the above.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q3</h2><p>Why is governance important in IT decision-making?</p><ul><li>A. To slow down processes</li><li>B. To provide control and accountability</li><li>C. To avoid using technology</li><li>D. To reduce competition</li></ul></section>
-    <section class="slide"><h2>Answer Q3</h2><p>Correct Answer: <strong>B</strong> – To provide control and accountability.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q4</h2><p>Which of the following is a key step in IT procurement?</p><ul><li>A. Plan and identify needs</li><li>B. Ignore vendor proposals</li><li>C. Skip contract management</li><li>D. Avoid research</li></ul></section>
-    <section class="slide"><h2>Answer Q4</h2><p>Correct Answer: <strong>A</strong> – Plan and identify needs.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q5</h2><p>What is one major challenge in IT Procurement?</p><ul><li>A. Unlimited budgets</li><li>B. Complex rules and regulations</li><li>C. No vendor involvement</li><li>D. Instant processes</li></ul></section>
-    <section class="slide"><h2>Answer Q5</h2><p>Correct Answer: <strong>B</strong> – Complex rules and regulations.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q6</h2><p>Why does good IT governance help organizations?</p><ul><li>A. It wastes money</li><li>B. It reduces services</li><li>C. It ensures fairness and saves money</li><li>D. It eliminates compliance</li></ul></section>
-    <section class="slide"><h2>Answer Q6</h2><p>Correct Answer: <strong>C</strong> – It ensures fairness and saves money.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q7</h2><p>What salary range does an IT Governance Analyst typically earn?</p><ul><li>A. $40K – $60K</li><li>B. $70K – $85K</li><li>C. $93K – $114K</li><li>D. $150K+</li></ul></section>
-    <section class="slide"><h2>Answer Q7</h2><p>Correct Answer: <strong>C</strong> – $93K – $114K.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q8</h2><p>Which framework provides best practices for IT service management?</p><ul><li>A. COBOL</li><li>B. ITIL</li><li>C. ERP</li><li>D. SQL</li></ul></section>
-    <section class="slide"><h2>Answer Q8</h2><p>Correct Answer: <strong>B</strong> – ITIL.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q9</h2><p>What is one quality necessary for governance frameworks?</p><ul><li>A. Cybersecurity</li><li>B. Ignoring recovery plans</li><li>C. Eliminating compliance</li><li>D. Unlimited resources</li></ul></section>
-    <section class="slide"><h2>Answer Q9</h2><p>Correct Answer: <strong>A</strong> – Cybersecurity.</p></section>
-
-
-    <section class="slide"><h2>Quiz Q10</h2><p>What is one daily responsibility of IT Governance roles?</p><ul><li>A. Ignoring IT strategy</li><li>B. Setting IT objectives and ensuring compliance</li><li>C. Avoiding regulations</li><li>D. Eliminating technology investments</li></ul></section>
-    <section class="slide"><h2>Answer Q10</h2><p>Correct Answer: <strong>B</strong> – Setting IT objectives and ensuring compliance.</p></section>
-
-    <!-- Controls -->
-    <footer class="controls">
-      <div class="btns">
-        <button id="prev" aria-label="Previous slide">◀ Prev (←)</button>
-        <button id="next" aria-label="Next slide">Next (→) ▶</button>
-      </div>
-      <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
-      <div class="hint">Tip: use ← →, PageUp/PageDown, or click buttons. Press <kbd>P</kbd> to print/export PDF.</div>
-    </footer>
-  </div>
-
-  <script>
-    (function() {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const bar = document.getElementById('bar');
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-      let idx = 0;
-
-      function show(i) {
-        idx = Math.max(0, Math.min(i, slides.length - 1));
-        slides.forEach((s, n) => s.classList.toggle('active', n === idx));
-        const pct = ((idx + 1) / slides.length) * 100;
-        bar.style.width = pct + '%';
-        history.replaceState(null, '', `#${idx+1}`);
-      }
-
-      function next() { show(idx + 1); }
-      function prev() { show(idx - 1); }
-
-      nextBtn.addEventListener('click', next);
-      prevBtn.addEventListener('click', prev);
-
-      window.addEventListener('keydown', (e) => {
-        if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
-        if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
-        if (e.key.toLowerCase() === 'p') { window.print(); }
-      });
-
-      // Deep link to a specific slide via hash (#1..#N)
-      const startFromHash = () => {
-        const n = parseInt(location.hash.replace('#',''), 10);
-        if (!isNaN(n) && n >= 1 && n <= slides.length) show(n - 1); else show(0);
-      };
-      window.addEventListener('hashchange', startFromHash);
-      startFromHash();
-    })();
-  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation between sections
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentSection = 0;
+            
+            // Update navigation
+            function updateNavigation() {
+                sections.forEach((section, index) => {
+                    section.classList.remove('active');
+                    navItems[index].classList.remove('active');
+                });
+                
+                sections[currentSection].classList.add('active');
+                navItems[currentSection].classList.add('active');
+                
+                // Update button states
+                prevBtn.disabled = currentSection === 0;
+                nextBtn.disabled = currentSection === sections.length - 1;
+            }
+            
+            // Navigation items click
+            navItems.forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    currentSection = index;
+                    updateNavigation();
+                });
+            });
+            
+            // Previous button
+            prevBtn.addEventListener('click', function() {
+                if (currentSection > 0) {
+                    currentSection--;
+                    updateNavigation();
+                }
+            });
+            
+            // Next button
+            nextBtn.addEventListener('click', function() {
+                if (currentSection < sections.length - 1) {
+                    currentSection++;
+                    updateNavigation();
+                }
+            });
+            
+            // Quiz functionality
+            const options = document.querySelectorAll('.option');
+            const submitBtn = document.getElementById('submit-quiz');
+            const resetBtn = document.getElementById('reset-quiz');
+            const tryAgainBtn = document.getElementById('try-again');
+            const quizResults = document.getElementById('quiz-results');
+            const scoreValue = document.getElementById('score-value');
+            const resultsFeedback = document.getElementById('results-feedback');
+            
+            // Option selection
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove any existing selections in this question
+                    const parent = this.parentElement;
+                    const siblings = parent.querySelectorAll('.option');
+                    siblings.forEach(sib => {
+                        sib.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Submit quiz
+            submitBtn.addEventListener('click', function() {
+                let score = 0;
+                let allAnswered = true;
+                
+                // Check each question
+                document.querySelectorAll('.quiz-question').forEach(question => {
+                    const selectedOption = question.querySelector('.option.selected');
+                    
+                    if (!selectedOption) {
+                        allAnswered = false;
+                        return;
+                    }
+                    
+                    if (selectedOption.getAttribute('data-correct') === 'true') {
+                        score++;
+                        selectedOption.classList.add('correct');
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        // Highlight correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                });
+                
+                if (!allAnswered) {
+                    alert('Please answer all questions before submitting.');
+                    return;
+                }
+                
+                // Show results
+                scoreValue.textContent = score;
+                
+                // Feedback based on score
+                if (score === 5) {
+                    resultsFeedback.textContent = 'Excellent! You have a great understanding of IT Procurement & Governance!';
+                } else if (score >= 3) {
+                    resultsFeedback.textContent = 'Good job! You have a solid understanding of the basics.';
+                } else {
+                    resultsFeedback.textContent = 'Keep learning! Review the material and try again.';
+                }
+                
+                quizResults.style.display = 'block';
+                document.querySelector('.quiz-container').style.opacity = '0.7';
+                
+                // Disable options after submission
+                options.forEach(option => {
+                    option.style.pointerEvents = 'none';
+                });
+                
+                submitBtn.disabled = true;
+            });
+            
+            // Reset quiz
+            resetBtn.addEventListener('click', function() {
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                    option.style.pointerEvents = 'auto';
+                });
+                
+                quizResults.style.display = 'none';
+                document.querySelector('.quiz-container').style.opacity = '1';
+                submitBtn.disabled = false;
+            });
+            
+            // Try again button
+            tryAgainBtn.addEventListener('click', function() {
+                resetBtn.click();
+            });
+        });
+    </script>
 </body>
 </html>
