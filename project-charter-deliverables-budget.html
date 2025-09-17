@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Creation Environment - Project Charter</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f1eb;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .student-info {
+            background: #e8f5e8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2d5d3b;
+        }
+        
+        .student-info h3 {
+            color: #2d5d3b;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #2d5d3b;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section-title {
+            margin: 0;
+            color: #2d5d3b;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .placeholder {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+            color: #856404;
+            font-style: italic;
+        }
+        
+        .completed-work {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .completed-header {
+            color: #155724;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .scope-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .scope-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid transparent;
+        }
+        
+        .scope-card.in-scope {
+            border-left-color: #28a745;
+        }
+        
+        .scope-card.roadmap {
+            border-left-color: #17a2b8;
+        }
+        
+        .scope-card.out-scope {
+            border-left-color: #dc3545;
+        }
+        
+        .scope-card h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .stakeholder-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .stakeholder-table th {
+            background: #2d5d3b;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .stakeholder-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 13px;
+        }
+        
+        .stakeholder-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .power-interest-grid {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .grid-placeholder {
+            background: #e9ecef;
+            border: 2px dashed #6c757d;
+            border-radius: 10px;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #1976d2;
+        }
+        
+        .instructions strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .scope-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Content Creation Environment</h1>
+            <p>Project Charter - Managing IT Projects Course</p>
+        </div>
+        
+        <div class="content">
+            <!-- Student Information -->
+            <div class="student-info">
+                <h3>Student Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Student Name:</div>
+                        <div class="info-value">Mohammad Umar Ansari</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Course:</div>
+                        <div class="info-value">Managing IT Projects</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Semester:</div>
+                        <div class="info-value">Fall 2025</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 1: Project Title & Description -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">📋 1. Project Title & Description</h2>
+                </div>
+                <div class="section-content">
+                    <div class="placeholder" style="text-align:left;">
+                        <h3 style="margin-top:0;">Project Title: Content Creation Environment</h3>
+                        <p>The goal of this project is to build a creative content environment that supports production of short-form videos, long-form videos, digital art, and game-ready 3D assets. This environment will equip me with the tools and workflow to expand my creative output for academic, personal, and professional growth, and can also support requests from others for content services.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Vision, Mission & Strategy Alignment -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">🎯 2. Vision, Mission & Strategy Alignment</h2>
+                </div>
+                <div class="section-content">
+                    <div class="instructions">
+                        <strong>Instructions:</strong>
+                        Explain how this project aligns with your personal mission, vision, and strategic goals. Reference your previous mission/vision/strategy work.
+                    </div>
+                    
+                    <div class="placeholder" style="text-align:left;">
+                        <h4>Personal Mission Connection:</h4>
+                        <p>This project reflects my passion for creativity and technology. Building a single environment for video, art, and 3D assets supports my values of growth, innovation, and clear communication through media.</p>
+                        
+                        <h4>Vision Alignment:</h4>
+                        <p>Completing this project moves me toward a long‑term vision of working in media, content creation, or game design. The deliverables become portfolio pieces I can showcase to instructors, collaborators, and future employers.</p>
+                        
+                        <h4>Strategic Goal Support:</h4>
+                        <p>It advances goals to improve technical skills (editing, 3D, digital art), develop a repeatable workflow, and manage a multi‑phase project on a semester timeline while engaging real stakeholders (audience, platforms, peers).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Business Case -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">💼 3. Business Case & Justification</h2>
+                </div>
+                <div class="section-content">
+                    <div class="instructions">
+                        <strong>Instructions:</strong>
+                        Describe how this project will add value to you either professionally or personally. What benefits will you gain?
+                    </div>
+                    
+                    <div class="placeholder" style="text-align:left;">
+                        <h4>Professional Value:</h4>
+                        <p>Strengthens my resume and portfolio with video projects, digital art, and game assets; builds platform experience (TikTok/YouTube) and evidence of a consistent production process.</p>
+                        
+                        <h4>Personal Value:</h4>
+                        <p>Provides a structured creative outlet, builds confidence from publishing work, and creates habits for planning, versioning, and review.</p>
+                        
+                        <h4>Learning Outcomes:</h4>
+                        <p>Hands‑on practice with CapCut, Blender/Maya/3ds Max, and GIMP/paint.net; stakeholder engagement; scope and schedule management; analytics‑driven iteration using audience feedback.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: High-Level Scope -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">📏 4. High-Level Scope</h2>
+                </div>
+                <div class="section-content">
+                    <div class="completed-work">
+                        <div class="completed-header">✅ Use Your Previous Scope Assignment</div>
+                        <p>Copy and paste your scope document content from your previous assignment into the placeholders below.</p>
+                    </div>
+                    
+                    <div class="scope-grid">
+                        <div class="scope-card in-scope">
+                            <h4>✅ In Scope for Semester Project</h4>
+                            <div class="placeholder" style="text-align:left;">
+                                <ul>
+                                    <li>Install and configure creative software (CapCut; Blender/Maya/3ds Max; GIMP/paint.net).</li>
+                                    <li>Produce 5–10 short‑form videos for TikTok/YouTube Shorts.</li>
+                                    <li>Create 2 long‑form videos (5–10 minutes each).</li>
+                                    <li>Design and render basic game‑ready 3D assets.</li>
+                                    <li>Produce 3–5 digital art pieces.</li>
+                                    <li>Set up folder structure, naming conventions, and backups.</li>
+                                    <li>Publish selected work and collect feedback/analytics.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="scope-card roadmap">
+                            <h4>🗺️ Roadmap Items (≤6 Months)</h4>
+                            <div class="placeholder" style="text-align:left;">
+                                <ul>
+                                    <li>Advance to textured, rigged, and animated 3D assets.</li>
+                                    <li>Collaborate with other creators on joint projects.</li>
+                                    <li>Launch a consistent cross‑platform upload schedule.</li>
+                                    <li>Monetize content (ads, commissions, asset/art sales).</li>
+                                    <li>Upgrade hardware/software for smoother production.</li>
+                                    <li>Create cohesive branding (logo, intro, templates).</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="scope-card out-scope">
+                            <h4>❌ Out of Scope</h4>
+                            <div class="placeholder" style="text-align:left;">
+                                <ul>
+                                    <li>Developing a full commercial video game.</li>
+                                    <li>Hiring a professional studio/production team.</li>
+                                    <li>Studio‑quality or feature‑length films.</li>
+                                    <li>Building custom content‑creation software.</li>
+                                    <li>Virtual reality content production.</li>
+                                    <li>Large‑scale paid marketing campaigns.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Stakeholder Register -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">👥 5. Stakeholder Register</h2>
+                </div>
+                <div class="section-content">
+                    <div class="completed-work">
+                        <div class="completed-header">✅ Use Your Previous Stakeholder Assignment</div>
+                        <p>Copy and paste your stakeholder information from your previous assignment. Include both the table and your power-interest grid.</p>
+                    </div>
+                    
+                    <table class="stakeholder-table">
+                        <thead>
+                            <tr>
+                                <th>Stakeholder</th>
+                                <th>Category</th>
+                                <th>Role/Interest</th>
+                                <th>Power</th>
+                                <th>Interest</th>
+                                <th>Engagement Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Project Owner (Student)</td>
+                                <td>Internal</td>
+                                <td>Main creator; drives scope, schedule, and quality.</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>Manage Closely – weekly goals, progress reviews, adjust plans fast.</td>
+                            </tr>
+                            <tr>
+                                <td>Instructor/Professor</td>
+                                <td>Internal</td>
+                                <td>Evaluates deliverables; ensures academic alignment.</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>Manage Closely – regular updates, milestone reviews, rubric alignment.</td>
+                            </tr>
+                            <tr>
+                                <td>Classmates/Peers</td>
+                                <td>Internal</td>
+                                <td>Provide feedback and potential collaboration.</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                                <td>Keep Informed – share drafts, request critique, peer testing.</td>
+                            </tr>
+                            <tr>
+                                <td>Social Media Audience</td>
+                                <td>External</td>
+                                <td>Consumers; engagement and analytics shape iteration.</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>Manage Closely – monitor comments/metrics, iterate content.</td>
+                            </tr>
+                            <tr>
+                                <td>Platforms (TikTok, YouTube, X/Twitter)</td>
+                                <td>External</td>
+                                <td>Distribution algorithms and content policies.</td>
+                                <td>High</td>
+                                <td>Medium</td>
+                                <td>Keep Satisfied – follow guidelines, optimize metadata, avoid strikes.</td>
+                            </tr>
+                            <tr>
+                                <td>Friends/Family Testers</td>
+                                <td>External</td>
+                                <td>Early feedback on clarity and appeal.</td>
+                                <td>Low</td>
+                                <td>High</td>
+                                <td>Keep Informed – quick reviews, A/B feedback sessions.</td>
+                            </tr>
+                            <tr>
+                                <td>Software Tools (CapCut, Blender, GIMP, etc.)</td>
+                                <td>External</td>
+                                <td>Technical foundation; updates may affect workflow.</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                                <td>Monitor – track updates, troubleshoot issues as needed.</td>
+                            </tr>
+                            <tr>
+                                <td>Potential Collaborators (artists, editors, designers)</td>
+                                <td>External</td>
+                                <td>Extend capabilities and audience reach.</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                                <td>Keep Informed – share roadmap, schedule collabs that fit scope.</td>
+                            </tr>
+                            <tr>
+                                <td>Regulatory/Policy Bodies (copyright, fair use)</td>
+                                <td>Regulatory</td>
+                                <td>Compliance with IP laws and platform rules.</td>
+                                <td>High</td>
+                                <td>Low</td>
+                                <td>Keep Satisfied – credit sources, use licensed assets, respect policies.</td>
+                            </tr>
+                            <tr>
+                                <td>Future Employers/Portfolio Reviewers</td>
+                                <td>External</td>
+                                <td>Assess quality and professionalism of outputs.</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                                <td>Keep Informed – maintain polished portfolio and case notes.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="power-interest-grid">
+                        <h4>Power-Interest Grid Visualization</h4>
+                        <div class="grid-placeholder" style="text-align:left;">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                                <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                    <strong>Manage Closely (High Power, High Interest)</strong>
+                                    <ul>
+                                        <li>Project Owner (Student)</li>
+                                        <li>Instructor/Professor</li>
+                                        <li>Social Media Audience</li>
+                                    </ul>
+                                </div>
+                                <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                    <strong>Keep Satisfied (High Power, Low Interest)</strong>
+                                    <ul>
+                                        <li>Platforms (TikTok, YouTube, X/Twitter)</li>
+                                        <li>Regulatory/Policy Bodies</li>
+                                    </ul>
+                                </div>
+                                <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                    <strong>Keep Informed (Low Power, High Interest)</strong>
+                                    <ul>
+                                        <li>Classmates/Peers</li>
+                                        <li>Friends/Family Testers</li>
+                                        <li>Potential Collaborators</li>
+                                        <li>Future Employers/Portfolio Reviewers</li>
+                                    </ul>
+                                </div>
+                                <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                    <strong>Monitor (Low Power, Low Interest)</strong>
+                                    <ul>
+                                        <li>Software Tools</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Section 6: Deliverables & Budget Management -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">📦 6. Deliverables & Budget Management</h2>
+                </div>
+                <div class="section-content">
+                    <h4>Key Deliverables</h4>
+                    <ul>
+                        <li><strong>Content Creation Environment:</strong> Fully configured environment with free creative software installed and tested.</li>
+                        <li><strong>Short-Form Video Series:</strong> 5–10 videos (30–60s) edited in CapCut and published by Week 8.</li>
+                        <li><strong>Long-Form Videos:</strong> 2 polished videos (5–10 min) produced and uploaded by Week 12.</li>
+                        <li><strong>3D Game-Ready Assets:</strong> At least 3 textured 3D models exported in FBX/OBJ by Week 10.</li>
+                        <li><strong>Digital Art Portfolio:</strong> 3–5 finalized art pieces created in GIMP/paint.net by Week 12.</li>
+                        <li><strong>Organized Workflow System:</strong> Structured folders, naming conventions, and backup process implemented by Week 6.</li>
+                    </ul>
+
+                    <h4>Budget Management</h4>
+                    <p>The project emphasizes the use of freeware and existing resources to minimize costs. Software such as CapCut, Blender, GIMP, and paint.net are all free. Estimated costs are primarily related to hardware use, optional storage, and potential small asset purchases.</p>
+
+                    <table class="stakeholder-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Estimated Cost</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Software Tools</td>
+                                <td>$0</td>
+                                <td>CapCut, Blender, GIMP, and paint.net are all free.</td>
+                            </tr>
+                            <tr>
+                                <td>Hardware Usage</td>
+                                <td>$50</td>
+                                <td>Electricity, wear and tear on personal computer.</td>
+                            </tr>
+                            <tr>
+                                <td>Cloud Storage/Backups</td>
+                                <td>$20</td>
+                                <td>Optional low-cost storage or external drive usage.</td>
+                            </tr>
+                            <tr>
+                                <td>Stock Assets (textures, audio, etc.)</td>
+                                <td>$30</td>
+                                <td>Only if needed to improve project outputs.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Estimated Cost</strong></td>
+                                <td><strong>$100</strong></td>
+                                <td>Project remains low-cost by leveraging freeware.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Footer Note -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">📝 Additional Charter Components</h2>
+                </div>
+                <div class="section-content">
+                    <div class="instructions">
+                        <strong>Note for Future Updates:</strong>
+                        This charter will be expanded throughout the semester as we cover additional project management components including:
+                        <ul>
+                            <li>Project Methodology Selection</li>
+                            <li>Deliverables & Definition of Done</li>
+                            <li>High-Level Timeline & Milestones</li>
+                            <li>Execution Plan Overview</li>
+                            <li>Risk Register</li>
+                            <li>Acceptance Criteria</li>
+                            <li>Project Manager Authority & Approvals</li>
+                        </ul>
+                        Keep this HTML file - you'll be adding to it as the semester progresses!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
