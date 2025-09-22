@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Content Environment – Project Methodology Diagram</title>
+<style>
+    /* --- Base styles from project charter (light tweaks for diagram) --- */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f5f1eb; line-height: 1.6; color: #333; }
+    .container { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+    .header { background: linear-gradient(135deg, #2d5d3b, #4a7c59); color: #fff; padding: 32px 40px; text-align: center; }
+    .header h1 { margin: 0 0 8px; font-size: 30px; font-weight: 700; }
+    .header p { margin: 0; font-size: 15px; opacity: .95; }
+    .content { padding: 28px 32px 40px; }
+
+    /* Section shells */
+    .section { margin-bottom: 28px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.05); overflow: hidden; border: 1px solid #eee; }
+    .section-header { background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 16px 20px; border-bottom: 2px solid #e9ecef; }
+    .section-title { margin: 0; color: #2d5d3b; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+    .section-content { padding: 20px; }
+
+    /* Pills for Part 1–4 summary */
+    .pill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .pill { background: #e8f5e8; border-left: 5px solid #2d5d3b; border-radius: 10px; padding: 12px 14px; }
+    .pill h3 { margin: 0 0 6px; font-size: 14px; color: #2d5d3b; }
+    .pill p { margin: 0; font-size: 13px; }
+
+    /* Diagram styles */
+    .diagram-wrap { background: #fafafa; border: 1px solid #e9ecef; border-radius: 12px; padding: 12px; }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin: 10px 0 4px; }
+    .legend .key { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; }
+    .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid #c2c2c2; }
+    .swatch.core { background:#e3f2fd; border-color:#90caf9; }
+    .swatch.visual { background:#fff3cd; border-color:#ffc107; }
+    .swatch.metrics { background:#e8f5e9; border-color:#81c784; }
+    .swatch.automation { background:#f3e5f5; border-color:#ba68c8; }
+    .swatch.foundation { background:#f8f9fa; border-color:#adb5bd; }
+
+    .diagram { width: 100%; height: auto; display:block; }
+
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600; background:#2d5d3b; color:#fff; }
+
+    :focus-visible { outline: 3px solid #4a7c59; outline-offset: 2px; }
+
+    @media (max-width: 720px) {
+        .header h1 { font-size: 24px; }
+        .content { padding: 20px; }
+    }
+</style>
+</head>
+<body>
+    <main class="container" aria-labelledby="title">
+        <header class="header">
+            <h1 id="title">Methodology Diagram – Content Creation Environment</h1>
+            <p>Choice: <strong>Hybrid–Iterative</strong> with small version tags. Feedback after each release.</p>
+        </header>
+
+        <div class="content">
+            <!-- Quick summary pills (Parts 1–4) in a simple tone -->
+            <section class="section" aria-labelledby="summary-title">
+                <div class="section-header"><h2 id="summary-title" class="section-title">Parts 1–4 (Quick Summary)</h2></div>
+                <div class="section-content">
+                    <div class="pill-grid" role="list">
+                        <div class="pill" role="listitem">
+                            <h3>Requirements</h3>
+                            <p>Hybrid: core is stable (folders, names, tools). Creative parts change with results.</p>
+                        </div>
+                        <div class="pill" role="listitem">
+                            <h3>Cadence</h3>
+                            <p>Multiple releases. Review after each release.</p>
+                        </div>
+                        <div class="pill" role="listitem">
+                            <h3>Approaches</h3>
+                            <p>Predictive for setup, Incremental for releases, Iterative to improve, Agile for flow.</p>
+                        </div>
+                        <div class="pill" role="listitem">
+                            <h3>Decision</h3>
+                            <p><span class="badge" aria-label="Selected methodology">Hybrid–Iterative</span> with v0.1→v0.5. Usable the whole time.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Part 5: Diagram -->
+            <section class="section" aria-labelledby="diagram-title">
+                <div class="section-header"><h2 id="diagram-title" class="section-title">Part 5: Project Plan Diagram</h2></div>
+                <div class="section-content">
+                    <p>Simple timeline with phases, deliverables, feedback loops, and key checks.</p>
+
+                    <div class="legend" aria-label="Legend">
+                        <span class="key"><span class="swatch foundation" aria-hidden="true"></span>Foundation</span>
+                        <span class="key"><span class="swatch core" aria-hidden="true"></span>Content Flow</span>
+                        <span class="key"><span class="swatch visual" aria-hidden="true"></span>Visual System</span>
+                        <span class="key"><span class="swatch metrics" aria-hidden="true"></span>Metrics Loop</span>
+                        <span class="key"><span class="swatch automation" aria-hidden="true"></span>Light Automation</span>
+                    </div>
+
+                    <!-- Responsive SVG swimlane diagram -->
+                    <div class="diagram-wrap" role="img" aria-label="Swimlane diagram showing phases, increments, feedback loops, and a multi-release timeline.">
+                        <svg class="diagram" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="laneGrad" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="100%" stop-color="#f7f7f7"/>
+                                </linearGradient>
+                                <style>
+                                    .lane-label{font:600 14px 'Segoe UI',Tahoma,sans-serif; fill:#2d5d3b}
+                                    .tick{font:12px 'Segoe UI',Tahoma,sans-serif; fill:#6c757d}
+                                    .box{stroke:#c9c9c9; stroke-width:1;}
+                                    .note{font:12px 'Segoe UI',Tahoma,sans-serif; fill:#333}
+                                </style>
+                            </defs>
+
+                            <!-- Timeline axis -->
+                            <g aria-label="Timeline weeks">
+                                <line x1="120" y1="40" x2="1120" y2="40" stroke="#adb5bd" stroke-width="1.5" />
+                                <g fill="#6c757d" class="ticks">
+                                    <g transform="translate(200,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R1</text></g>
+                                    <g transform="translate(510,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R2</text></g>
+                                    <g transform="translate(670,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R3</text></g>
+                                    <g transform="translate(830,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R4</text></g>
+                                    <g transform="translate(970,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R5</text></g>
+                                </g>
+                                    <g transform="translate(280,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">W2</text></g>
+                                    <g transform="translate(440,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">W3</text></g>
+                                    <g transform="translate(600,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">W4</text></g>
+                                    <g transform="translate(760,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">W5</text></g>
+                                    <g transform="translate(920,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">W6</text></g>
+                                    <g transform="translate(1080,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">W7</text></g>
+                                </g>
+                            </g>
+
+                            <!-- Swimlanes -->
+                            <g aria-label="Swimlanes">
+                                <g>
+                                    <rect x="40" y="70" width="1120" height="80" fill="url(#laneGrad)" stroke="#e9ecef"/>
+                                    <rect x="40" y="160" width="1120" height="80" fill="#e3f2fd" opacity="0.6" stroke="#90caf9"/>
+                                    <rect x="40" y="250" width="1120" height="80" fill="#fff3cd" opacity="0.7" stroke="#ffc107"/>
+                                    <rect x="40" y="340" width="1120" height="80" fill="#e8f5e9" opacity="0.7" stroke="#81c784"/>
+                                    <rect x="40" y="430" width="1120" height="80" fill="#f3e5f5" opacity="0.7" stroke="#ba68c8"/>
+                                </g>
+                                <g class="lane-labels">
+                                    <text x="52" y="118" class="lane-label">Foundation</text>
+                                    <text x="52" y="208" class="lane-label">Content Flow</text>
+                                    <text x="52" y="298" class="lane-label">Visual System</text>
+                                    <text x="52" y="388" class="lane-label">Metrics Loop</text>
+                                    <text x="52" y="478" class="lane-label">Light Automation</text>
+                                </g>
+                            </g>
+
+                            <!-- Increments (boxes) with simpler wording -->
+                            <g aria-label="Increment v0.1 Core Setup">
+                                <rect x="160" y="86" width="240" height="48" fill="#f8f9fa" class="box" rx="8"/>
+                                <text x="280" y="105" text-anchor="middle" class="note">v0.1 Core Setup</text>
+                                <text x="280" y="121" text-anchor="middle" class="note" fill="#6c757d">Folders • Names • Brand • QC</text>
+                            </g>
+
+                            <g aria-label="Increment v0.2 Flow Ready">
+                                <rect x="360" y="176" width="300" height="48" fill="#e3f2fd" class="box" rx="8"/>
+                                <text x="510" y="195" text-anchor="middle" class="note">v0.2 Flow Ready</text>
+                                <text x="510" y="211" text-anchor="middle" class="note" fill="#336699">Scripts • Board • Export</text>
+                            </g>
+
+                            <g aria-label="Increment v0.3 Visual Kit">
+                                <rect x="520" y="266" width="300" height="48" fill="#fff3cd" class="box" rx="8"/>
+                                <text x="670" y="285" text-anchor="middle" class="note">v0.3 Visual Kit</text>
+                                <text x="670" y="301" text-anchor="middle" class="note" fill="#8a6d3b">Thumbnails • Titles • End card</text>
+                            </g>
+
+                            <g aria-label="Increment v0.4 KPI Loop">
+                                <rect x="680" y="356" width="300" height="48" fill="#e8f5e9" class="box" rx="8"/>
+                                <text x="830" y="375" text-anchor="middle" class="note">v0.4 KPI Loop</text>
+                                <text x="830" y="391" text-anchor="middle" class="note" fill="#1b5e20">Sheet • Review • Targets</text>
+                            </g>
+
+                            <g aria-label="Increment v0.5 Automation">
+                                <rect x="840" y="446" width="260" height="48" fill="#f3e5f5" class="box" rx="8"/>
+                                <text x="970" y="465" text-anchor="middle" class="note">v0.5 Automation</text>
+                                <text x="970" y="481" text-anchor="middle" class="note" fill="#6a1b9a">Drive handoff • Captions</text>
+                            </g>
+
+                            <!-- Feedback loop: Publish → Measure → Improve (each release) -->
+                            <g aria-label="Feedback loop arrows">
+                                <path d="M 590 224 C 620 224, 620 350, 590 350" fill="none" stroke="#4a7c59" stroke-width="2" marker-end="url(#arrow)"/>
+                                <path d="M 590 350 C 560 350, 560 296, 590 296" fill="none" stroke="#4a7c59" stroke-width="2" marker-end="url(#arrow)"/>
+                                <path d="M 590 296 C 620 296, 620 224, 590 224" fill="none" stroke="#4a7c59" stroke-width="2" marker-end="url(#arrow)"/>
+                            </g>
+
+                            <!-- Decision Gate with simple wording -->
+                            <g aria-label="Decision gate: change if metrics stay low">
+                                <rect x="400" y="356" width="220" height="48" rx="8" fill="#ffffff" class="box" stroke-dasharray="5,4"/>
+                                <text x="510" y="375" text-anchor="middle" class="note" fill="#2d5d3b">Decision Gate</text>
+                                <text x="510" y="391" text-anchor="middle" class="note" fill="#2d5d3b">CTR or 30s low for 2 reviews → change</text>
+                            </g>
+
+                            <!-- Arrowhead marker -->
+                            <defs>
+                                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                                    <path d="M0,0 L0,6 L6,3 z" fill="#4a7c59" />
+                                </marker>
+                            </defs>
+
+                            <!-- Version tags under timeline -->
+                            <g aria-label="Version tags">
+                                <text x="200" y="150" text-anchor="middle" class="tick">v0.1</text>
+                                <text x="510" y="240" text-anchor="middle" class="tick">v0.2</text>
+                                <text x="670" y="330" text-anchor="middle" class="tick">v0.3</text>
+                                <text x="830" y="420" text-anchor="middle" class="tick">v0.4</text>
+                                <text x="970" y="510" text-anchor="middle" class="tick">v0.5</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <p class="note" style="margin-top:10px">Tip: To share, print this page to PDF or copy the SVG into your diagram tool.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
