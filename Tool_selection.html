@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Week 5 | Activity 3 – Tool Selection & Setup</title>
+<style>
+  /* Base (matches project charter vibe) */
+  :root{
+    --green-1:#2d5d3b; --green-2:#4a7c59; --paper:#f5f1eb; --ink:#333;
+    --soft:#f8f9fa; --soft-2:#e9ecef; --accent:#ffc107; --ok:#28a745; --blue:#1976d2;
+  }
+  html,body{margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:20px}
+  .container{max-width:980px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08);overflow:hidden}
+  header.hero{background:linear-gradient(135deg,var(--green-1),var(--green-2));color:#fff;padding:36px 40px;text-align:center}
+  header.hero h1{margin:0 0 6px;font-size:30px;font-weight:700}
+  header.hero p{margin:0;opacity:.95}
+  .content{padding:32px}
+  section.card{background:#fff;border:1px solid #eee;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.04);margin:0 0 22px}
+  .card .card-h{background:linear-gradient(135deg,#f8f9fa,#e9ecef);border-bottom:2px solid var(--soft-2);padding:14px 18px}
+  .card .card-h h2{margin:0;color:var(--green-1);font-size:18px}
+  .card .card-b{padding:18px}
+  .grid{display:grid;gap:14px}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .pill{background:#e8f5e8;border-left:5px solid var(--green-1);border-radius:10px;padding:12px 14px}
+  .pill h3{margin:0 0 6px;font-size:14px;color:var(--green-1)}
+  .pill p{margin:0;font-size:13px}
+  ul.clean{margin:8px 0 0 20px}
+  .kvs{display:grid;grid-template-columns:180px 1fr;gap:8px 16px;margin-top:10px}
+  .kvs .k{font-weight:600;color:var(--green-1)}
+  .badge{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--green-1);color:#fff;font-size:12px;font-weight:600}
+  .table{width:100%;border-collapse:collapse;margin-top:6px}
+  .table th,.table td{border-bottom:1px solid #eee;padding:10px 8px;text-align:left;font-size:14px}
+  .table th{background:var(--green-1);color:#fff}
+  .note{background:#fff3cd;border:2px dashed var(--accent);padding:12px;border-radius:10px;color:#856404;margin-top:8px}
+  .ok{background:#d4edda;border:1px solid #28a745;color:#155724;padding:10px;border-radius:8px}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .btn{appearance:none;border:0;background:var(--green-1);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
+  @media (max-width:720px){.content{padding:20px}.kvs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <main class="container" aria-labelledby="title">
+    <header class="hero">
+      <h1 id="title">Week 5 | Activity 3 – Tool Selection & Setup</h1>
+      <p>Methodology: <span class="badge">Hybrid–Iterative</span> · Cadence: <span class="badge">Multiple Releases</span></p>
+    </header>
+
+    <div class="content">
+      <!-- Step 1 -->
+      <section class="card" aria-labelledby="s1">
+        <div class="card-h"><h2 id="s1">Step 1: Choose Your Tool 🛠️</h2></div>
+        <div class="card-b">
+          <div class="grid cols-3" role="list">
+            <div class="pill" role="listitem">
+              <h3>Tools Explored</h3>
+              <p><strong>Trello</strong> – simple boards and checklists.</p>
+              <p><strong>Notion</strong> – docs + databases in one place.</p>
+              <p><strong>ClickUp</strong> – tasks, dependencies, Gantt.</p>
+            </div>
+            <div class="pill" role="listitem">
+              <h3>Final Choice</h3>
+              <p><strong>ClickUp</strong>. It supports my hybrid flow without extra drama.</p>
+            </div>
+            <div class="pill" role="listitem">
+              <h3>Reasoning</h3>
+              <p>Multiple views (Board/List/Gantt), easy dependencies, custom fields for releases (R1–R5), and it stays light. Fits how I work.</p>
+            </div>
+          </div>
+
+          <div class="kvs" style="margin-top:14px">
+            <div class="k">Key Features</div>
+            <div>
+              <ul class="clean">
+                <li>Lists per release (R1–R5) with Board + Gantt views</li>
+                <li>Custom fields: Release, Deliverable, Priority</li>
+                <li>Task dependencies for clean sequencing</li>
+                <li>Saved filters for quick focus</li>
+              </ul>
+            </div>
+            <div class="k">Cost</div>
+            <div>
+              <p>Free tier is enough for this class project. No paid tools needed.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 2 -->
+      <section class="card" aria-labelledby="s2">
+        <div class="card-h"><h2 id="s2">Step 2: Set Up My Project 📁</h2></div>
+        <div class="card-b">
+          <div class="kvs">
+            <div class="k">Structure</div>
+            <div>
+              <ul class="clean">
+                <li><strong>Space:</strong> Content Environment</li>
+                <li><strong>Folder:</strong> Releases</li>
+                <li><strong>Lists:</strong> R1 · R2 · R3 · R4 · R5</li>
+              </ul>
+            </div>
+            <div class="k">Statuses</div>
+            <div>To Do → Doing → Review/QC → Done</div>
+            <div class="k">Custom Fields</div>
+            <div>Release (R1–R5), Deliverable, Priority, Dependencies, Proof Link</div>
+            <div class="k">Views</div>
+            <div>Board, List, Gantt, Calendar (optional)</div>
+          </div>
+
+          <div class="note" aria-live="polite" style="margin-top:14px">
+            Hybrid setup: release cycles, iteration points, and quick feedback after each release.
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 3 -->
+      <section class="card" aria-labelledby="s3">
+        <div class="card-h"><h2 id="s3">Step 3: Real Content 📝</h2></div>
+        <div class="card-b">
+          <h3 style="margin-top:0">Tasks (15+)</h3>
+          <table class="table" role="table" aria-label="Task list">
+            <thead><tr><th>Release</th><th>Task</th><th>Due (target)</th><th>Status</th></tr></thead>
+            <tbody>
+              <!-- R1: Foundation -->
+              <tr><td>R1</td><td>Install core tools (CapCut, Blender/3ds Max, GIMP/paint.net)</td><td>Sep 24, 2025</td><td>To Do</td></tr>
+              <tr><td>R1</td><td>Create folder structure /ContentEnv + README</td><td>Sep 23, 2025</td><td>To Do</td></tr>
+              <tr><td>R1</td><td>Set naming rules (YYYYMMDD_platform-topic_v01.ext)</td><td>Sep 24, 2025</td><td>To Do</td></tr>
+              <tr><td>R1</td><td>QC checklist v0.1 (export presets, image sizes, render notes)</td><td>Sep 25, 2025</td><td>To Do</td></tr>
+              <tr><td>R1</td><td>Test projects in CapCut, Blender, GIMP (simple export/render)</td><td>Sep 26, 2025</td><td>To Do</td></tr>
+
+              <!-- R2: Start environments -->
+              <tr><td>R2</td><td>Gather references & outline goals for 2–3 maps/environments</td><td>Oct 01, 2025</td><td>To Do</td></tr>
+              <tr><td>R2</td><td>Blockout (greybox) – Map A layout</td><td>Oct 03, 2025</td><td>To Do</td></tr>
+              <tr><td>R2</td><td>Prepare texture/asset checklist (base materials, props, decals)</td><td>Oct 04, 2025</td><td>To Do</td></tr>
+
+              <!-- R3: Detail + second map -->
+              <tr><td>R3</td><td>Detail pass – Map A (terrain/props/materials)</td><td>Oct 14, 2025</td><td>To Do</td></tr>
+              <tr><td>R3</td><td>Lighting & post pass – Map A (exposure, contrast, readability)</td><td>Oct 18, 2025</td><td>To Do</td></tr>
+              <tr><td>R3</td><td>Blockout (greybox) – Map B layout</td><td>Oct 19, 2025</td><td>To Do</td></tr>
+
+              <!-- R4: Package & playtest -->
+              <tr><td>R4</td><td>Collision & pathing checks – Map A (optimize, fix snags)</td><td>Nov 02, 2025</td><td>To Do</td></tr>
+              <tr><td>R4</td><td>Detail pass – Map B (terrain/props/materials)</td><td>Nov 03, 2025</td><td>To Do</td></tr>
+              <tr><td>R4</td><td>Build test package(s) – Map A & B; capture walkthrough screenshots</td><td>Nov 03, 2025</td><td>To Do</td></tr>
+
+              <!-- R5: Polish & portfolio -->
+              <tr><td>R5</td><td>Polish passes – Map A & B (readability, performance, small fixes)</td><td>Nov 16, 2025</td><td>To Do</td></tr>
+              <tr><td>R5</td><td>Portfolio outputs – renders/screenshots + brief description per map</td><td>Nov 17, 2025</td><td>To Do</td></tr>
+              <tr><td>R5</td><td>Playtest feedback review & next changes (notes for next release)</td><td>Nov 18, 2025</td><td>To Do</td></tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top:18px">Major Deliverables (3–5)</h3>
+          <table class="table" role="table" aria-label="Deliverables">
+            <thead><tr><th>Release(s)</th><th>Deliverable</th><th>Definition of Done (summary)</th><th>Target Due</th></tr></thead>
+            <tbody>
+              <tr><td>R1</td><td>Content Creation Environment</td><td>Tools installed, folder system set, test exports done</td><td>Sep 26, 2025</td></tr>
+              <tr><td>R3–R4</td><td>3D Game-Ready Assets</td><td>3 low‑poly models (FBX/OBJ) with renders</td><td>Nov 03, 2025</td></tr>
+              <tr><td>R4–R5</td><td>Custom Game Maps/Environments</td><td>2–3 playable maps/environments packaged; screenshots or walkthrough; peer review</td><td>Nov 16, 2025</td></tr>
+              <tr><td>R5</td><td>Digital Art Portfolio</td><td>3–5 pieces exported and reviewed</td><td>Nov 17, 2025</td></tr>
+            </tbody>
+          </table>
+
+          <div class="ok" style="margin-top:12px">
+            Good to go. I can import this plan into ClickUp and start working the releases.
+          </div>
+
+          <div class="cta">
+            <a class="btn" href="#" onclick="window.print();return false;">Print to PDF</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
