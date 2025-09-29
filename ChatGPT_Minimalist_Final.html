@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Content Creation Environment — Project Charter</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#666666;
+  --line:#e5e7eb;
+  --accent:#111111;
+  --link:#0b57d0;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+}
+.topbar{
+  position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line);
+}
+.topbar .brand{max-width:1100px; margin:0 auto; padding:12px 20px; font-weight:600; letter-spacing:.2px}
+.page{
+  max-width:1100px; margin: 24px auto; padding:0 20px; display:grid; grid-template-columns: 280px 1fr; gap:24px;
+}
+#toc{
+  position:sticky; top:60px; align-self:start; border:1px solid var(--line); border-radius:12px; padding:16px;
+}
+.toc-title{font-weight:600; margin-bottom:8px}
+#toc-list{margin:0; padding-left:18px}
+#toc-list li{margin:4px 0}
+#toc a{color:var(--link); text-decoration:none}
+#toc a:hover{text-decoration:underline}
+.toc-controls{display:flex; gap:8px; margin-top:12px}
+.toc-controls button{
+  background:#fff; border:1px solid var(--line); border-radius:8px; padding:6px 10px; cursor:pointer
+}
+.content-area{min-width:0}
+.content-area img, .content-area table{max-width:100%}
+/* Collapsible sections */
+details{border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:0; background:#fff; scroll-margin-top: 80px;}
+summary{
+  list-style:none; cursor:pointer; padding:14px 16px; font-weight:600; outline:none;
+}
+summary::-webkit-details-marker{display:none}
+.sec-body{padding:0 16px 16px}
+/* Typography */
+h1,h2,h3,h4{line-height:1.3}
+h1{font-size:28px; margin:0 0 12px}
+h2{font-size:22px; margin:18px 0 8px}
+h3{font-size:18px; margin:16px 0 6px}
+p{margin:10px 0}
+ul,ol{margin:8px 0 8px 22px}
+a{color:var(--link)}
+.footer{
+  max-width:1100px; margin:40px auto; padding:0 20px; color:var(--muted); border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center; padding-top:16px;
+}
+.badge{border:1px solid var(--line); border-radius:999px; padding:4px 10px; font-size:12px}
+/* Responsive */
+@media (max-width: 900px){
+  .page{grid-template-columns: 1fr}
+  #toc{position:relative; top:auto}
+}
+.anchor{display:block; height:0; margin:0; padding:0; scroll-margin-top:80px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">Content Creation Environment — Project Charter</div>
+  </header>
+  <div class="page">
+    <nav id="toc" aria-label="Table of contents">
+  <div class="toc-title">Contents</div>
+  <ol id="toc-list"></ol>
+  <div class="toc-controls">
+    <button id="expand-all" type="button">Expand all</button>
+    <button id="collapse-all" type="button">Collapse all</button>
+  </div>
+</nav>
+
+    <main id="content" class="content-area">
+      <!-- ORIGINAL CONTENT START -->
+<header class="header">
+    <div class="hero">
+        <h1>Content Creation Environment</h1>
+        <p class="subtitle">Project Charter - Managing IT Projects Course</p>
+    </div>
+</header>
+
+<section class="card">
+    <div class="section-title">Student Information</div>
+    <div class="grid">
+        <div class="field">
+            <span class="label">Student Name:</span>
+            <span class="value">Mohammad Umar Ansari</span>
+        </div>
+        <div class="field">
+            <span class="label">Course:</span>
+            <span class="value">Managing IT Projects</span>
+        </div>
+        <div class="field">
+            <span class="label">Semester:</span>
+            <span class="value">Fall 2025</span>
+        </div>
+    </div>
+</section>
+
+<h2 id="project-title-description">1. Project Title &amp; Description</h2>
+<section class="card">
+    <div class="tip-box">
+        <p><strong><em>Project Title: Content Creation Environment</em></strong></p>
+        <p>The goal of this project is to build a creative content environment that supports production of custom game maps/environments, digital art, and game-ready 3D assets. This environment equips me with the tools and workflow to expand my creative output for academic, personal, and professional growth, and can also support requests from others for content services.</p>
+    </div>
+</section>
+
+<h2 id="vision-mission-strategy-alignment">2. Vision, Mission &amp; Strategy Alignment</h2>
+<section class="card">
+    <div class="two-col-grid">
+        <div>
+            <h3>Vision</h3>
+            <p>To create a flexible, modern, and organized content creation environment that supports creative and technical goals across academic, professional, and personal projects.</p>
+            <h3>Mission</h3>
+            <p>To establish a sustainable workflow that integrates content planning, production, review, and publishing into a cohesive system, using accessible tools and standard practices.</p>
+        </div>
+        <div>
+            <h3>Strategy Alignment</h3>
+            <ul>
+                <li>Enhances productivity and clarity across multiple creative projects.</li>
+                <li>Supports goal-setting and consistent output through templates and checklists.</li>
+                <li>Creates portfolio-ready outputs with repeatable quality.</li>
+                <li>Keeps tools engine-agnostic to maintain portability and flexibility.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<h2 id="project-scope">3. Project Scope</h2>
+<section class="scope-grid">
+    <div class="scope-card in-scope">
+        <h4>✅ In Scope for Semester Project</h4>
+        <div class="placeholder" style="min-height: auto;">
+            <ul>
+                <li>Install and configure creative software (Blender/Maya/3ds Max; GIMP/paint.net; optional: editors for layout docs).</li>
+                <li>Design 2–3 <strong>custom game maps/environments</strong> with paper design docs and reference boards.</li>
+                <li>Create <strong>greybox/layout packs</strong> using <em>engine‑agnostic</em> formats (FBX/GLB) with a README.</li>
+                <li>Design and render basic <strong>game‑ready 3D assets</strong> to support the environments.</li>
+                <li>Produce 3–5 digital art pieces (branding, thumbnails, banners) to support portfolio presentation.</li>
+                <li>Set up folder structure, naming conventions, versioning, and backups.</li>
+                <li>Publish selected work to a portfolio site or repository and collect feedback/analytics.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="scope-card out-of-scope">
+        <h4>🚫 Out of Scope for Semester Project</h4>
+        <div class="placeholder" style="min-height: auto;">
+            <ul>
+                <li>Short-form and long-form video production (removed).</li>
+                <li>Engine-specific build scripts or SDK lock-in.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<h2 id="stakeholders">4. Stakeholders</h2>
+<section class="card" style="min-height:auto;">
+    <ul>
+        <li><strong>Project Owner:</strong> Mohammad Umar Ansari</li>
+        <li><strong>Instructor/Reviewer:</strong> Course Instructor</li>
+        <li><strong>Peer Reviewers:</strong> Classmates providing feedback during review cycles</li>
+    </ul>
+</section>
+
+<h2 id="milestones-timeline">5. Milestones &amp; Timeline</h2>
+<section class="card">
+    <ul>
+        <li>Week 1–2: Setup tools, templates, folder structure, and references.</li>
+        <li>Week 3–4: Create map blockouts &amp; greybox for 1–2 environments.</li>
+        <li>Week 5–6: Art pass &amp; iteration based on feedback and testing.</li>
+        <li>Week 7: Playtesting + polishing.</li>
+        <li>Week 8: Publish selected work and update portfolio.</li>
+    </ul>
+</section>
+
+<h2 id="methodology">6. Project Methodology</h2>
+<section class="card">
+    <h3>Methodology Explanation</h3>
+    <p>The project uses an iterative approach inspired by Agile, organized in short sprints with a clear Definition of Done (DoD), peer review, and deliverables for each iteration. Each sprint produces an increment such as design document updates, map/environments assets, and layout passes.</p>
+
+    <h3>Methodology Diagram</h3>
+    <ol>
+        <li><strong>Plan</strong> – Define goals, constraints, and references</li>
+        <li><strong>Build</strong> – Create blockouts, assets, and layout integrations</li>
+        <li><strong>Review</strong> – Collect peer feedback and testing notes</li>
+        <li><strong>Polish</strong> – Improve visuals, clarity, and presentation</li>
+        <li><strong>Publish</strong> – Package outputs, create README, and update portfolio</li>
+    </ol>
+
+    <h3>Project Tool Selection</h3>
+    <div class="two-col-grid">
+        <div>
+            <p><strong>Tools Explored:</strong></p>
+            <ul>
+                <li>Notion – Docs, kanban, templates (free tier)</li>
+                <li>ClickUp – Tasks, docs, automations (free tier)</li>
+                <li>Jira – Sprint boards, issue types (free tier for small teams)</li>
+            </ul>
+        </div>
+        <div>
+            <p><strong>Final Choice &amp; Rationale:</strong> <em>ClickUp</em> (example) offers a balanced mix of docs + tasks, custom statuses, and simple sprint views that align with the iterative method without heavy admin overhead.</p>
+            <p><strong>Key Features:</strong></p>
+            <ul>
+                <li>Custom statuses and templates to enforce DoD</li>
+                <li>Kanban, List, and Calendar views for planning</li>
+                <li>Checklists for asset and publishing steps</li>
+            </ul>
+            <p class="muted">Cost: Free tier is sufficient; upgrades optional.</p>
+        </div>
+    </div>
+</section>
+
+<h2 id="risks-mitigations">7. Risks &amp; Mitigations</h2>
+<section class="card two-col-grid">
+    <div>
+        <h3>Top Risks</h3>
+        <ul>
+            <li>Scope creep across assets and maps.</li>
+            <li>Time compression near deliverable dates.</li>
+            <li>Version drift between docs and asset packs.</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Mitigations</h3>
+        <ul>
+            <li>Sprint caps + change log.</li>
+            <li>Weekly mini-reviews against DoD.</li>
+            <li>Repository structure and tags for releases.</li>
+        </ul>
+    </div>
+</section>
+
+<h2 id="success-metrics">8. Success Metrics</h2>
+<section class="card">
+    <ul>
+        <li>Maps: ≥ 2 shipped layouts with publish-ready docs.</li>
+        <li>Review Quality: ≥ 80% checklist pass on DoD.</li>
+        <li>Iteration Speed: Average sprint cycle ≤ 7 days.</li>
+        <li>Portfolio Impact: Updated showcase with screenshots &amp; notes.</li>
+    </ul>
+</section>
+
+<section class="card">
+    <h2 id="appendix">Appendix</h2>
+    <p>Keep all wording exactly as your previous charter. Paste it in this section and we’ll wire it into the sections above without changing content—only presentation.</p>
+</section>
+
+<footer style="max-width:900px;margin:20px auto 40px auto;text-align:center;color:#6c757d;font-size:13px;">
+      © 2025 • Content Creation Environment • <span style="border:1px solid #ced4da;border-radius:999px;padding:4px 10px;">Cal State LA</span>
+    </footer>
+      <!-- ORIGINAL CONTENT END -->
+    </main>
+  </div>
+  <footer class="footer">© 2025 • Content Creation Environment • <span class="badge">Cal State LA</span></footer>
+</div>
+<script>
+(function(){
+  const content = document.getElementById('content');
+  let hdrs = Array.from(content.querySelectorAll('h2'));
+  if(!hdrs.length) hdrs = Array.from(content.querySelectorAll('h3'));
+  const tocList = document.getElementById('toc-list');
+  const used = new Map();
+  function slugify(t){
+    const base = (t||'section').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'section';
+    let s = base, i = 2;
+    while(used.has(s)) { s = base + '-' + i++; }
+    used.set(s,true); return s;
+  }
+
+  // Build collapsible sections
+  if(hdrs.length){
+    const kids = Array.from(content.childNodes);
+    const newNodes = [];
+    let i = 0;
+    while(i < kids.length){
+      const node = kids[i];
+      if(node.nodeType === 1 && (node.tagName === 'H2' || node.tagName === 'H3')){
+        const header = node; const level = header.tagName;
+        const id = (header.id && !used.has(header.id) ? (used.set(header.id,true), header.id) : slugify(header.textContent));
+        const details = document.createElement('details');
+        details.id = id; details.open = false;
+        const anchor = document.createElement('span');
+        anchor.id = id + '-anchor'; // unique anchor id
+        anchor.className = 'anchor';
+        const summary = document.createElement('summary');
+        summary.appendChild(document.createTextNode(header.textContent));
+        const bodyDiv = document.createElement('div'); bodyDiv.className = 'sec-body';
+        // collect siblings
+        i++;
+        while(i < kids.length){
+          const next = kids[i];
+          if(next.nodeType === 1 && (next.tagName === level)) break;
+          bodyDiv.appendChild(next); i++;
+        }
+        details.appendChild(anchor);
+        details.appendChild(summary);
+        details.appendChild(bodyDiv);
+        newNodes.push(details);
+        // TOC item
+        if(tocList){
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = '#' + id; a.textContent = header.textContent;
+          a.addEventListener('click', function(e){ e.preventDefault(); openSectionById(id, true); });
+          li.appendChild(a); tocList.appendChild(li);
+        }
+      } else { newNodes.push(node); i++; }
+    }
+    content.innerHTML = ''; newNodes.forEach(n => content.appendChild(n));
+  }
+
+  // Expand/Collapse controls (hardened)
+  const expandBtn = document.getElementById('expand-all');
+  const collapseBtn = document.getElementById('collapse-all');
+  function allDetails(){ return Array.from(content.querySelectorAll('details')); }
+  function expandAll(){ allDetails().forEach(d => { d.open = true; }); }
+  function collapseAll(){ allDetails().forEach(d => { d.open = false; }); }
+  expandBtn && expandBtn.addEventListener('click', function(e){ e.preventDefault(); expandAll(); });
+  collapseBtn && collapseBtn.addEventListener('click', function(e){ e.preventDefault(); collapseAll(); });
+
+  // Open & scroll helper
+  function openSectionById(id, push){
+    let target = document.getElementById(id);
+    if(!target){ // allow anchor id too
+      const alt = document.getElementById(id + '-anchor');
+      if(alt) target = alt.closest('details');
+    }
+    const details = target && (target.tagName==='DETAILS' ? target : target.closest && target.closest('details'));
+    if(details){ details.open = true; if(push){ try{ history.pushState(null,'','#'+details.id); }catch(e){} } details.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+
+  // Intercept any in-page hash link
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const id = decodeURIComponent(a.getAttribute('href').slice(1));
+    if(!id) return;
+    const exists = document.getElementById(id) || document.getElementById(id + '-anchor');
+    if(exists){ e.preventDefault(); openSectionById(id, true); }
+  });
+
+  // Deep-link on load and hash changes
+  function handleHash(){
+    const id = decodeURIComponent(location.hash.slice(1));
+    if(!id) return;
+    setTimeout(()=>openSectionById(id,false), 0);
+  }
+  window.addEventListener('hashchange', handleHash);
+  handleHash();
+})();
+</script>
+</body>
+</html>
