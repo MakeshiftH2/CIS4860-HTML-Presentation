@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Creation Environment - Project Charter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #1a1a1a;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .nav-pills {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-pill {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .nav-pill:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .student-info {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .student-info h3 {
+            color: #2563eb;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-item {
+            background: linear-gradient(135deg, #f8faff, #f1f5f9);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .info-label {
+            font-weight: 700;
+            color: #374151;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section.collapsed {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-header:hover {
+            background: linear-gradient(135deg, #334155, #475569);
+        }
+        
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+        }
+        
+        .section-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0;
+        }
+        
+        .section-title .emoji {
+            margin-right: 1rem;
+            font-size: 1.6rem;
+        }
+        
+        .collapse-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .section.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .section-content {
+            padding: 2rem;
+            display: block;
+            animation: expandDown 0.3s ease-out;
+            overflow: hidden;
+        }
+        
+        .section.collapsed .section-content {
+            display: none;
+            max-height: 0;
+            padding: 0;
+        }
+        
+        @keyframes expandDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 2000px;
+            }
+        }
+        
+        .placeholder {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            color: #92400e;
+            font-weight: 500;
+        }
+        
+        .completed-work {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid #10b981;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .completed-header {
+            color: #065f46;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+        
+        .instructions strong {
+            display: block;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .scope-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .scope-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .scope-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .scope-card.in-scope {
+            border-left-color: #10b981;
+        }
+        
+        .scope-card.roadmap {
+            border-left-color: #06b6d4;
+        }
+        
+        .scope-card.out-scope {
+            border-left-color: #ef4444;
+        }
+        
+        .scope-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .stakeholder-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stakeholder-table th {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .stakeholder-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            background: white;
+        }
+        
+        .stakeholder-table tr:hover td {
+            background: #f9fafb;
+        }
+        
+        .power-interest-grid {
+            margin: 1.5rem 0;
+        }
+        
+        .grid-placeholder {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .diagram-wrap {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .section-content {
+                padding: 1.5rem;
+            }
+            
+            .nav-pills {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .scope-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Content Creation Environment</h1>
+            <p>Project Charter - Managing IT Projects Course</p>
+        </div>
+        
+        <nav class="nav-pills">
+            <a href="#student-info" class="nav-pill">👤 Student Info</a>
+            <a href="#section-1" class="nav-pill">📋 Project Title</a>
+            <a href="#section-2" class="nav-pill">🎯 Vision & Mission</a>
+            <a href="#section-3" class="nav-pill">💼 Business Case</a>
+            <a href="#section-4" class="nav-pill">📝 Scope</a>
+            <a href="#section-5" class="nav-pill">👥 Stakeholders</a>
+            <a href="#section-methodology" class="nav-pill">⚙️ Methodology</a>
+            <a href="#section-tools" class="nav-pill">🔧 Tools</a>
+        </nav>
+        
+        <!-- Student Information -->
+        <div id="student-info" class="student-info">
+            <h3>Student Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Student Name</div>
+                    <div class="info-value">Mohammad Umar Ansari</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Course</div>
+                    <div class="info-value">Managing IT Projects</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Semester</div>
+                    <div class="info-value">Fall 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Project Title & Description -->
+        <div id="section-1" class="section">
+            <div class="section-header" onclick="toggleSection('section-1')">
+                <h2 class="section-title">
+                    <span><span class="emoji">📋</span>1. Project Title & Description</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="text-align:left;">
+                    <h3 style="margin-top:0;">Project Title: Content Creation Environment</h3>
+                    <p>The goal of this project is to build a creative content environment that supports production of short-form videos, long-form videos, digital art, and game-ready 3D assets. This environment will equip me with the tools and workflow to expand my creative output for academic, personal, and professional growth, and can also support requests from others for content services.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Vision, Mission & Strategy Alignment -->
+        <div id="section-2" class="section">
+            <div class="section-header" onclick="toggleSection('section-2')">
+                <h2 class="section-title">
+                    <span><span class="emoji">🎯</span>2. Vision, Mission & Strategy Alignment</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="instructions">
+                    <strong>Instructions:</strong>
+                    Explain how this project aligns with your personal mission, vision, and strategic goals. Reference your previous mission/vision/strategy work.
+                </div>
+                
+                <div class="placeholder" style="text-align:left;">
+                    <h4>Personal Mission Connection:</h4>
+                    <p>This project reflects my passion for creativity and technology. Building a single environment for video, art, and 3D assets supports my values of growth, innovation, and clear communication through media.</p>
+                    
+                    <h4>Vision Alignment:</h4>
+                    <p>Completing this project moves me toward a long-term vision of working in media, content creation, or game design. The deliverables become portfolio pieces I can showcase to instructors, collaborators, and future employers.</p>
+                    
+                    <h4>Strategic Goal Support:</h4>
+                    <p>It advances goals to improve technical skills (editing, 3D, digital art), develop a repeatable workflow, and manage a multi-phase project on a semester timeline while engaging real stakeholders (audience, platforms, peers).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Business Case -->
+        <div id="section-3" class="section">
+            <div class="section-header" onclick="toggleSection('section-3')">
+                <h2 class="section-title">
+                    <span><span class="emoji">💼</span>3. Business Case & Justification</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="instructions">
+                    <strong>Instructions:</strong>
+                    Describe how this project will add value to you either professionally or personally. What benefits will you gain?
+                </div>
+                
+                <div class="placeholder" style="text-align:left;">
+                    <h4>Professional Value:</h4>
+                    <p>Strengthens my resume and portfolio with video projects, digital art, and game assets; builds platform experience (TikTok/YouTube) and evidence of a consistent production process.</p>
+                    
+                    <h4>Personal Value:</h4>
+                    <p>Provides a structured creative outlet, builds confidence from publishing work, and creates habits for planning, versioning, and review.</p>
+                    
+                    <h4>Learning Outcomes:</h4>
+                    <p>Hands-on practice with CapCut, Blender/Maya/3ds Max, and GIMP/paint.net; stakeholder engagement; scope and schedule management; analytics-driven iteration using audience feedback.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: High-Level Scope -->
+        <div id="section-4" class="section">
+            <div class="section-header" onclick="toggleSection('section-4')">
+                <h2 class="section-title">
+                    <span><span class="emoji">📝</span>4. High-Level Scope</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="completed-work">
+                    <div class="completed-header">✅ Use Your Previous Scope Assignment</div>
+                    <p>Copy and paste your scope document content from your previous assignment into the placeholders below.</p>
+                </div>
+                
+                <div class="scope-grid">
+                    <div class="scope-card in-scope">
+                        <h4>✅ In Scope for Semester Project</h4>
+                        <div class="placeholder" style="text-align:left;">
+                            <ul>
+                                <li>Install and configure creative software (CapCut; Blender/Maya/3ds Max; GIMP/paint.net).</li>
+                                <li>Produce 5–10 short-form videos for TikTok/YouTube Shorts.</li>
+                                <li>Create 2 long-form videos (5–10 minutes each).</li>
+                                <li>Design and render basic game-ready 3D assets.</li>
+                                <li>Produce 3–5 digital art pieces.</li>
+                                <li>Set up folder structure, naming conventions, and backups.</li>
+                                <li>Publish selected work and collect feedback/analytics.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="scope-card roadmap">
+                        <h4>🗺️ Roadmap Items (≤6 Months)</h4>
+                        <div class="placeholder" style="text-align:left;">
+                            <ul>
+                                <li>Advance to textured, rigged, and animated 3D assets.</li>
+                                <li>Collaborate with other creators on joint projects.</li>
+                                <li>Launch a consistent cross-platform upload schedule.</li>
+                                <li>Monetize content (ads, commissions, asset/art sales).</li>
+                                <li>Upgrade hardware/software for smoother production.</li>
+                                <li>Create cohesive branding (logo, intro, templates).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="scope-card out-scope">
+                        <h4>❌ Out of Scope</h4>
+                        <div class="placeholder" style="text-align:left;">
+                            <ul>
+                                <li>Developing a full commercial video game.</li>
+                                <li>Hiring a professional studio/production team.</li>
+                                <li>Studio-quality or feature-length films.</li>
+                                <li>Building custom content-creation software.</li>
+                                <li>Virtual reality content production.</li>
+                                <li>Large-scale paid marketing campaigns.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Stakeholder Register -->
+        <div id="section-5" class="section">
+            <div class="section-header" onclick="toggleSection('section-5')">
+                <h2 class="section-title">
+                    <span><span class="emoji">👥</span>5. Stakeholder Register</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="completed-work">
+                    <div class="completed-header">✅ Use Your Previous Stakeholder Assignment</div>
+                    <p>Copy and paste your stakeholder information from your previous assignment. Include both the table and your power-interest grid.</p>
+                </div>
+                
+                <table class="stakeholder-table">
+                    <thead>
+                        <tr>
+                            <th>Stakeholder</th>
+                            <th>Category</th>
+                            <th>Role/Interest</th>
+                            <th>Power</th>
+                            <th>Interest</th>
+                            <th>Engagement Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Project Owner (Student)</td>
+                            <td>Internal</td>
+                            <td>Main creator; drives scope, schedule, and quality.</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td>Manage Closely – weekly goals, progress reviews, adjust plans fast.</td>
+                        </tr>
+                        <tr>
+                            <td>Instructor/Professor</td>
+                            <td>Internal</td>
+                            <td>Evaluates deliverables; ensures academic alignment.</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td>Manage Closely – regular updates, milestone reviews, rubric alignment.</td>
+                        </tr>
+                        <tr>
+                            <td>Classmates/Peers</td>
+                            <td>Internal</td>
+                            <td>Provide feedback and potential collaboration.</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>Keep Informed – share drafts, request critique, peer testing.</td>
+                        </tr>
+                        <tr>
+                            <td>Social Media Audience</td>
+                            <td>External</td>
+                            <td>Consumers; engagement and analytics shape iteration.</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td>Manage Closely – monitor comments/metrics, iterate content.</td>
+                        </tr>
+                        <tr>
+                            <td>Platforms (TikTok, YouTube, X/Twitter)</td>
+                            <td>External</td>
+                            <td>Distribution algorithms and content policies.</td>
+                            <td>High</td>
+                            <td>Medium</td>
+                            <td>Keep Satisfied – follow guidelines, optimize metadata, avoid strikes.</td>
+                        </tr>
+                        <tr>
+                            <td>Friends/Family Testers</td>
+                            <td>External</td>
+                            <td>Early feedback on clarity and appeal.</td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td>Keep Informed – quick reviews, A/B feedback sessions.</td>
+                        </tr>
+                        <tr>
+                            <td>Software Tools (CapCut, Blender, GIMP, etc.)</td>
+                            <td>External</td>
+                            <td>Technical foundation; updates may affect workflow.</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td>Monitor – track updates, troubleshoot issues as needed.</td>
+                        </tr>
+                        <tr>
+                            <td>Potential Collaborators (artists, editors, designers)</td>
+                            <td>External</td>
+                            <td>Extend capabilities and audience reach.</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>Keep Informed – share roadmap, schedule collabs that fit scope.</td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory/Policy Bodies (copyright, fair use)</td>
+                            <td>Regulatory</td>
+                            <td>Compliance with IP laws and platform rules.</td>
+                            <td>High</td>
+                            <td>Low</td>
+                            <td>Keep Satisfied – credit sources, use licensed assets, respect policies.</td>
+                        </tr>
+                        <tr>
+                            <td>Future Employers/Portfolio Reviewers</td>
+                            <td>External</td>
+                            <td>Assess quality and professionalism of outputs.</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td>Keep Informed – maintain polished portfolio and case notes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="power-interest-grid">
+                    <h4>Power-Interest Grid Visualization</h4>
+                    <div class="grid-placeholder" style="text-align:left;">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                            <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                <strong>Manage Closely (High Power, High Interest)</strong>
+                                <ul>
+                                    <li>Project Owner (Student)</li>
+                                    <li>Instructor/Professor</li>
+                                    <li>Social Media Audience</li>
+                                </ul>
+                            </div>
+                            <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                <strong>Keep Satisfied (High Power, Low Interest)</strong>
+                                <ul>
+                                    <li>Platforms (TikTok, YouTube, X/Twitter)</li>
+                                    <li>Regulatory/Policy Bodies</li>
+                                </ul>
+                            </div>
+                            <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                <strong>Keep Informed (Low Power, High Interest)</strong>
+                                <ul>
+                                    <li>Classmates/Peers</li>
+                                    <li>Friends/Family Testers</li>
+                                    <li>Potential Collaborators</li>
+                                    <li>Future Employers/Portfolio Reviewers</li>
+                                </ul>
+                            </div>
+                            <div style="border:1px solid #ccc;border-radius:8px;padding:10px;">
+                                <strong>Monitor (Low Power, Low Interest)</strong>
+                                <ul>
+                                    <li>Software Tools</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology Section -->
+        <div id="section-methodology" class="section">
+            <div class="section-header" onclick="toggleSection('section-methodology')">
+                <h2 class="section-title">
+                    <span><span class="emoji">⚙️</span>Project Methodology Explanation</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="border-color:#2d5d3b;background:#e8f5e8;color:#2d5d3b">
+                    Choice: <strong>Hybrid—Iterative</strong> with <strong>multiple releases</strong>. Base system is stable (tools, folders, naming). Creative parts change with feedback.
+                </div>
+                <div class="scope-grid">
+                    <div class="scope-card in-scope">
+                        <h4>Why this fits</h4>
+                        <p>Quick feedback after each release. Low overhead. Easy to adjust layouts or process without breaking the plan.</p>
+                    </div>
+                    <div class="scope-card in-scope">
+                        <h4>How I run it</h4>
+                        <p>Releases (R1—R5). Each release: plan → build → review → improve. Keep WIP small so work finishes.</p>
+                    </div>
+                    <div class="scope-card in-scope">
+                        <h4>What I track</h4>
+                        <p>Throughput, quality checks, and review notes. If results are low in two reviews, schedule a change next release.</p>
+                    </div>
+                </div>
+                <table class="stakeholder-table" style="margin-top:15px">
+                    <thead><tr><th>Flow</th><th>Notes</th></tr></thead>
+                    <tbody><tr><td>Backlog → Plan → Build → Review/QC → Release → Measure → Improve</td><td>Repeat per release. Keep artifacts usable at every step.</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Methodology Diagram Section -->
+        <div id="section-diagram" class="section">
+            <div class="section-header" onclick="toggleSection('section-diagram')">
+                <h2 class="section-title">
+                    <span><span class="emoji">📊</span>Project Methodology Diagram</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="diagram-wrap" role="img" aria-label="Swimlane diagram with releases R1 to R5, phases, and feedback loops.">
+                    <svg class="diagram" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+                        <defs>
+                            <linearGradient id="laneGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f7f7f7"/></linearGradient>
+                            <style>
+                                .lane-label{font:600 14px 'Segoe UI',Tahoma,sans-serif; fill:#2d5d3b}
+                                .tick{font:12px 'Segoe UI',Tahoma,sans-serif; fill:#6c757d}
+                                .box{stroke:#c9c9c9; stroke-width:1;}
+                                .note{font:12px 'Segoe UI',Tahoma,sans-serif; fill:#333}
+                            </style>
+                            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L6,3 z" fill="#4a7c59" />
+                            </marker>
+                        </defs>
+
+                        <line x1="120" y1="40" x2="1120" y2="40" stroke="#adb5bd" stroke-width="1.5" />
+                        <g class="ticks">
+                            <g transform="translate(200,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R1</text></g>
+                            <g transform="translate(510,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R2</text></g>
+                            <g transform="translate(670,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R3</text></g>
+                            <g transform="translate(830,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R4</text></g>
+                            <g transform="translate(970,0)"><line x1="0" y1="36" x2="0" y2="44" stroke="#adb5bd"/><text x="0" y="30" text-anchor="middle" class="tick">R5</text></g>
+                        </g>
+
+                        <rect x="40" y="70" width="1120" height="80" fill="url(#laneGrad)" stroke="#e9ecef"/>
+                        <rect x="40" y="160" width="1120" height="80" fill="#e3f2fd" opacity="0.6" stroke="#90caf9"/>
+                        <rect x="40" y="250" width="1120" height="80" fill="#e8f5e9" opacity="0.7" stroke="#81c784"/>
+                        <text x="52" y="118" class="lane-label">Foundation</text>
+                        <text x="52" y="208" class="lane-label">Build Flow</text>
+                        <text x="52" y="298" class="lane-label">Measure & Improve</text>
+
+                        <g>
+                            <rect x="160" y="86" width="240" height="48" fill="#f8f9fa" class="box" rx="8"/>
+                            <text x="280" y="105" text-anchor="middle" class="note">R1 Core Setup</text>
+                            <text x="280" y="121" text-anchor="middle" class="note" fill="#6c757d">Tools • Folders • Naming • QC</text>
+
+                            <rect x="360" y="176" width="300" height="48" fill="#e3f2fd" class="box" rx="8"/>
+                            <text x="510" y="195" text-anchor="middle" class="note">R2—R3 Build</text>
+                            <text x="510" y="211" text-anchor="middle" class="note" fill="#336699">Assets • Environments • Portfolio</text>
+
+                            <rect x="680" y="266" width="300" height="48" fill="#e8f5e9" class="box" rx="8"/>
+                            <text x="830" y="285" text-anchor="middle" class="note">R4—R5 Measure</text>
+                            <text x="830" y="301" text-anchor="middle" class="note" fill="#1b5e20">Reviews • Targets • Next changes</text>
+                        </g>
+
+                        <path d="M 590 224 C 620 224, 620 296, 590 296" fill="none" stroke="#4a7c59" stroke-width="2" marker-end="url(#arrow)"/>
+                        <path d="M 590 296 C 560 296, 560 224, 590 224" fill="none" stroke="#4a7c59" stroke-width="2" marker-end="url(#arrow)"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div id="section-tools" class="section">
+            <div class="section-header" onclick="toggleSection('section-tools')">
+                <h2 class="section-title">
+                    <span><span class="emoji">🔧</span>Project Tool Selection Explanation</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="student-info" style="background:#e8f5e8;border-left-color:#2d5d3b">
+                    <h3 style="margin-top:0">My choice</h3>
+                    <p><strong>ClickUp</strong>. It supports my hybrid flow (releases, dependencies, multiple views) and stays simple.</p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Tools Explored</div>
+                        <div class="info-value">Trello (boards), Notion (docs + databases), ClickUp (tasks + Gantt)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Key Features</div>
+                        <div class="info-value">Lists per release (R1—R5); custom fields (Release, Deliverable, Priority); dependencies; saved filters</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Cost</div>
+                        <div class="info-value">Free tier is enough for this class. No paid tools needed.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Note -->
+        <div id="section-future" class="section">
+            <div class="section-header" onclick="toggleSection('section-future')">
+                <h2 class="section-title">
+                    <span><span class="emoji">📝</span>Additional Charter Components</span>
+                    <span class="collapse-icon">▼</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="instructions">
+                    <strong>Note for Future Updates:</strong>
+                    This charter will be expanded throughout the semester as we cover additional project management components including:
+                    <ul>
+                        <li>Project Methodology Selection</li>
+                        <li>Deliverables & Definition of Done</li>
+                        <li>High-Level Timeline & Milestones</li>
+                        <li>Execution Plan Overview</li>
+                        <li>Risk Register</li>
+                        <li>Acceptance Criteria</li>
+                        <li>Project Manager Authority & Approvals</li>
+                    </ul>
+                    Keep this HTML file - you'll be adding to it as the semester progresses!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-to-top" onclick="scrollToTop()" id="backToTop">↑</button>
+
+    <script>
+        // Toggle section collapse/expand
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('collapsed');
+        }
+
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll for navigation pills
+        document.querySelectorAll('.nav-pill').forEach(pill => {
+            pill.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Auto-collapse all sections except the first one on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.container > .section');
+            sections.forEach((section, index) => {
+                if (index > 0) {
+                    section.classList.add('collapsed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+                
