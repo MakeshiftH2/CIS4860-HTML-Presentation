@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Content Creation Environment – Project Charter</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#666666;
+  --line:#e5e7eb;
+  --accent:#111111;
+  --link:#0b57d0;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+}
+.topbar{
+  position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line);
+}
+.topbar .brand{max-width:1100px; margin:0 auto; padding:12px 20px; font-weight:600; letter-spacing:.2px}
+.page{
+  max-width:1100px; margin: 24px auto; padding:0 20px; display:grid; grid-template-columns: 280px 1fr; gap:24px;
+}
+#toc{
+  position:sticky; top:60px; align-self:start; border:1px solid var(--line); border-radius:12px; padding:16px;
+}
+.toc-title{font-weight:600; margin-bottom:8px}
+#toc-list{margin:0; padding-left:18px}
+#toc-list li{margin:4px 0}
+#toc a{color:var(--link); text-decoration:none}
+#toc a:hover{text-decoration:underline}
+.toc-controls{display:flex; gap:8px; margin-top:12px}
+.toc-controls button{
+  background:#fff; border:1px solid var(--line); border-radius:8px; padding:6px 10px; cursor:pointer
+}
+.content-area{min-width:0}
+.content-area img, .content-area table{max-width:100%; border-collapse:collapse;}
+.content-area table{width:100%; margin:16px 0;}
+.content-area th{background:#f8f9fa; padding:10px; text-align:left; border:1px solid var(--line); font-weight:600;}
+.content-area td{padding:10px; border:1px solid var(--line);}
+/* Collapsible sections */
+details{border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:0; background:#fff; scroll-margin-top: 80px;}
+summary{
+  list-style:none; cursor:pointer; padding:14px 16px; font-weight:600; outline:none;
+}
+summary::-webkit-details-marker{display:none}
+.sec-body{padding:0 16px 16px}
+/* Typography */
+h1,h2,h3,h4{line-height:1.3}
+h1{font-size:28px; margin:0 0 12px}
+h2{font-size:22px; margin:18px 0 8px}
+h3{font-size:18px; margin:16px 0 6px}
+h4{font-size:16px; margin:14px 0 6px; font-weight:600;}
+p{margin:10px 0}
+ul,ol{margin:8px 0 8px 22px}
+li{margin:6px 0;}
+a{color:var(--link)}
+.footer{
+  max-width:1100px; margin:40px auto; padding:0 20px; color:var(--muted); border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center; padding-top:16px;
+}
+.badge{border:1px solid var(--line); border-radius:999px; padding:4px 10px; font-size:12px}
+.card{border:1px solid var(--line); border-radius:12px; padding:16px; margin:12px 0; background:#fff;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:12px;}
+.field{display:flex; flex-direction:column; gap:4px;}
+.label{font-weight:600; font-size:14px; color:var(--muted);}
+.value{font-size:16px;}
+.tip-box{background:#f8f9fa; border-left:3px solid var(--accent); padding:12px 16px; border-radius:4px;}
+.two-col-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.scope-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0;}
+.scope-card{border:1px solid var(--line); border-radius:12px; padding:16px; background:#fff;}
+.scope-card.in-scope{border-left:4px solid #10b981;}
+.scope-card.out-of-scope{border-left:4px solid #ef4444;}
+.placeholder{min-height:60px;}
+.hero{text-align:center; padding:20px 0;}
+.subtitle{color:var(--muted); font-size:18px;}
+.section-title{font-size:20px; font-weight:600; margin-bottom:12px;}
+/* Responsive */
+@media (max-width: 900px){
+  .page{grid-template-columns: 1fr}
+  #toc{position:relative; top:auto}
+  .two-col-grid, .scope-grid{grid-template-columns:1fr;}
+}
+.anchor{display:block; height:0; margin:0; padding:0; scroll-margin-top:80px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">Content Creation Environment – Project Charter</div>
+  </header>
+  <div class="page">
+    <nav id="toc" aria-label="Table of contents">
+  <div class="toc-title">Contents</div>
+  <ol id="toc-list"></ol>
+  <div class="toc-controls">
+    <button id="expand-all" type="button">Expand all</button>
+    <button id="collapse-all" type="button">Collapse all</button>
+  </div>
+</nav>
+
+    <main id="content" class="content-area">
+<header class="header">
+    <div class="hero">
+        <h1>Content Creation Environment</h1>
+        <p class="subtitle">Project Charter - Managing IT Projects Course</p>
+    </div>
+</header>
+
+<section class="card">
+    <div class="section-title">Student Information</div>
+    <div class="grid">
+        <div class="field">
+            <span class="label">Student Name:</span>
+            <span class="value">Mohammad Umar Ansari</span>
+        </div>
+        <div class="field">
+            <span class="label">Course:</span>
+            <span class="value">Managing IT Projects</span>
+        </div>
+        <div class="field">
+            <span class="label">Semester:</span>
+            <span class="value">Fall 2025</span>
+        </div>
+    </div>
+</section>
+
+<h2 id="project-title-description">1. Project Title &amp; Description</h2>
+<section class="card">
+    <div class="tip-box">
+        <p><strong><em>Project Title: Content Creation Environment</em></strong></p>
+        <p><strong>Project Goal:</strong> To produce a portfolio of game-ready content (2-3 custom maps/environments, game-ready 3D assets, and digital art pieces) while establishing a repeatable production workflow.</p>
+        <p>This project establishes the foundational workflow and toolset (the "environment") that will enable ongoing content production beyond this semester, while delivering concrete portfolio pieces as immediate outputs. The environment supports production of custom game maps/environments, digital art, and game-ready 3D assets, equipping me with the tools and processes to expand my creative output for academic, personal, and professional growth.</p>
+    </div>
+</section>
+
+<h2 id="vision-mission-strategy-alignment">2. Vision, Mission &amp; Strategy Alignment</h2>
+<section class="card">
+    <div class="two-col-grid">
+        <div>
+            <h3>Vision</h3>
+            <p>To become a versatile content creator capable of producing high-quality game assets, environments, and digital art for indie games, professional projects, and personal creative expression.</p>
+            <h3>Mission</h3>
+            <p>To establish a sustainable workflow that integrates content planning, production, review, and publishing into a cohesive system, using accessible tools and standard practices.</p>
+        </div>
+        <div>
+            <h3>Strategy Alignment</h3>
+            <ul>
+                <li>Enhances productivity and clarity across multiple creative projects.</li>
+                <li>Supports goal-setting and consistent output through templates and checklists.</li>
+                <li>Creates portfolio-ready outputs with repeatable quality.</li>
+                <li>Keeps tools engine-agnostic to maintain portability and flexibility.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<h2 id="project-scope">3. Project Scope</h2>
+<section class="scope-grid">
+    <div class="scope-card in-scope">
+        <h4>✅ In Scope for Semester Project</h4>
+        <div class="placeholder" style="min-height: auto;">
+            <ul>
+                <li>Install and configure creative software (Blender/Maya/3ds Max; GIMP/paint.net; optional: editors for layout docs).</li>
+                <li>Design 2–3 <strong>custom game maps/environments</strong> with paper design docs and reference boards.</li>
+                <li>Create <strong>greybox/layout packs</strong> using <em>engine-agnostic</em> formats (FBX/GLB) with a README.</li>
+                <li>Design and render basic <strong>game-ready 3D assets</strong> to support the environments.</li>
+                <li>Produce 3–5 digital art pieces (branding, thumbnails, banners) to support portfolio presentation.</li>
+                <li>Set up folder structure, naming conventions, versioning, and backups.</li>
+                <li>Publish selected work to a portfolio site or repository and collect feedback/analytics.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="scope-card out-of-scope">
+        <h4>🚫 Out of Scope for Semester Project</h4>
+        <div class="placeholder" style="min-height: auto;">
+            <ul>
+                <li>Short-form and long-form video production (removed).</li>
+                <li>Engine-specific build scripts or SDK lock-in.</li>
+                <li>Full commercial game development.</li>
+                <li>Hiring professional studio/production team.</li>
+                <li>VR content production.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<h2 id="stakeholders">4. Stakeholder Register</h2>
+<section class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Stakeholder</th>
+                <th>Category</th>
+                <th>Role/Interest</th>
+                <th>Power</th>
+                <th>Interest</th>
+                <th>Engagement Strategy</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Project Owner (Mohammad Umar Ansari)</td>
+                <td>Internal</td>
+                <td>Main creator; drives scope, schedule, and quality</td>
+                <td>High</td>
+                <td>High</td>
+                <td>Manage Closely – weekly goals, progress reviews, adjust plans fast</td>
+            </tr>
+            <tr>
+                <td>Instructor/Professor</td>
+                <td>Internal</td>
+                <td>Evaluates deliverables; ensures academic alignment</td>
+                <td>High</td>
+                <td>High</td>
+                <td>Manage Closely – regular updates, milestone reviews, rubric alignment</td>
+            </tr>
+            <tr>
+                <td>Classmates/Peers</td>
+                <td>Internal</td>
+                <td>Provide feedback and potential collaboration</td>
+                <td>Medium</td>
+                <td>High</td>
+                <td>Keep Informed – share drafts, request critique, peer testing</td>
+            </tr>
+            <tr>
+                <td>Portfolio Reviewers / Future Employers</td>
+                <td>External</td>
+                <td>Assess quality and professionalism of outputs</td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>Keep Informed – maintain polished portfolio and case notes</td>
+            </tr>
+            <tr>
+                <td>Game Dev Community (forums, Discord)</td>
+                <td>External</td>
+                <td>Potential feedback on assets and maps</td>
+                <td>Low</td>
+                <td>High</td>
+                <td>Keep Informed – share progress, gather technical feedback</td>
+            </tr>
+            <tr>
+                <td>Software Tools (Blender, GIMP, etc.)</td>
+                <td>External</td>
+                <td>Technical foundation; updates may affect workflow</td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>Monitor – track updates, troubleshoot issues as needed</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3 style="margin-top:20px;">Power-Interest Grid</h3>
+    <div class="two-col-grid">
+        <div class="card" style="background:#f8f9fa;">
+            <strong>Manage Closely (High Power, High Interest)</strong>
+            <ul>
+                <li>Project Owner (Student)</li>
+                <li>Instructor/Professor</li>
+            </ul>
+        </div>
+        <div class="card" style="background:#f8f9fa;">
+            <strong>Keep Satisfied (High Power, Low Interest)</strong>
+            <ul>
+                <li><em>None identified</em></li>
+            </ul>
+        </div>
+        <div class="card" style="background:#f8f9fa;">
+            <strong>Keep Informed (Low Power, High Interest)</strong>
+            <ul>
+                <li>Classmates/Peers</li>
+                <li>Game Dev Community</li>
+            </ul>
+        </div>
+        <div class="card" style="background:#f8f9fa;">
+            <strong>Monitor (Low Power, Low Interest)</strong>
+            <ul>
+                <li>Software Tools</li>
+                <li>Portfolio Reviewers</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<h2 id="budget-estimation">5. Budget Estimation</h2>
+<section class="card">
+    <h3>Cost Breakdown</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Item</th>
+                <th>Cost</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Software</strong></td>
+                <td>Blender</td>
+                <td>$0</td>
+                <td>Free and open-source</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>GIMP / paint.net</td>
+                <td>$0</td>
+                <td>Free and open-source</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Maya/3ds Max (optional)</td>
+                <td>$0</td>
+                <td>Student license available</td>
+            </tr>
+            <tr>
+                <td><strong>Project Management</strong></td>
+                <td>ClickUp (Free Tier)</td>
+                <td>$0</td>
+                <td>Sufficient for project needs</td>
+            </tr>
+            <tr>
+                <td><strong>Storage/Hosting</strong></td>
+                <td>GitHub / Portfolio Site</td>
+                <td>$0</td>
+                <td>Free tier for public repositories</td>
+            </tr>
+            <tr>
+                <td><strong>Hardware</strong></td>
+                <td>Existing PC/Laptop</td>
+                <td>$0</td>
+                <td>Already owned</td>
+            </tr>
+            <tr>
+                <td><strong>Time Investment</strong></td>
+                <td>8 weeks × 8-12 hrs/week</td>
+                <td>64-96 hours</td>
+                <td>Primary cost is time</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Total Monetary Cost</strong></td>
+                <td><strong>$0</strong></td>
+                <td>All free/student resources</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>Budget Justification:</strong> This project leverages entirely free and student-licensed software, making it financially accessible. The primary investment is time (estimated 64-96 hours over the semester), which aligns with academic project expectations. No upgrades or paid tools are required for successful completion.</p>
+</section>
+
+<h2 id="deliverables">6. Deliverables with Definition of Done</h2>
+<section class="card">
+    <h3>Deliverable 1: Custom Game Map/Environment #1</h3>
+    <p><strong>Description:</strong> First complete game map with greybox layout and basic lighting.</p>
+    <p><strong>Definition of Done:</strong></p>
+    <ul>
+        <li>Design document with reference images and layout sketches completed</li>
+        <li>Greybox geometry exported in FBX/GLB format</li>
+        <li>Basic lighting and materials applied</li>
+        <li>README file with usage instructions included</li>
+        <li>Peer review completed with feedback documented</li>
+        <li>Files organized in proper folder structure with version tags</li>
+    </ul>
+    <p><strong>Tasks:</strong></p>
+    <ol>
+        <li>Research and gather reference images (4 hours)</li>
+        <li>Create design document with layout sketches (3 hours)</li>
+        <li>Model greybox geometry in Blender (8 hours)</li>
+        <li>Apply basic materials and lighting (4 hours)</li>
+        <li>Export to engine-agnostic formats (2 hours)</li>
+        <li>Write README documentation (2 hours)</li>
+        <li>Peer review and iteration (3 hours)</li>
+    </ol>
+    <p><strong>Dependencies:</strong> Software setup must be complete</p>
+    <p><strong>Time Estimate:</strong> 26 hours (Weeks 2-4)</p>
+
+    <h3>Deliverable 2: Custom Game Map/Environment #2</h3>
+    <p><strong>Description:</strong> Second game map with increased complexity and refinement.</p>
+    <p><strong>Definition of Done:</strong></p>
+    <ul>
+        <li>Design document completed with layout variations tested</li>
+        <li>Greybox with modular components exported</li>
+        <li>Lighting and atmosphere refined based on feedback from Map #1</li>
+        <li>README and asset list included</li>
+        <li>Playtesting notes documented</li>
+        <li>Version controlled and tagged</li>
+    </ul>
+    <p><strong>Tasks:</strong></p>
+    <ol>
+        <li>Concept and layout design (4 hours)</li>
+        <li>Greybox modeling with modular pieces (10 hours)</li>
+        <li>Lighting and material refinement (5 hours)</li>
+        <li>Export and documentation (3 hours)</li>
+        <li>Playtesting and feedback collection (4 hours)</li>
+    </ol>
+    <p><strong>Dependencies:</strong> Map #1 completed and reviewed</p>
+    <p><strong>Time Estimate:</strong> 26 hours (Weeks 4-6)</p>
+
+    <h3>Deliverable 3: Game-Ready 3D Asset Pack</h3>
+    <p><strong>Description:</strong> Collection of 5-8 modular 3D assets that support the environments.</p>
+    <p><strong>Definition of Done:</strong></p>
+    <ul>
+        <li>5-8 unique assets modeled with clean topology</li>
+        <li>UV unwrapping completed for all assets</li>
+        <li>Basic materials/textures applied</li>
+        <li>Exported in multiple formats (FBX, OBJ, GLB)</li>
+        <li>Asset catalog with preview images created</li>
+        <li>Technical specifications documented (poly count, dimensions)</li>
+    </ul>
+    <p><strong>Tasks:</strong></p>
+    <ol>
+        <li>Asset list planning and concept sketches (2 hours)</li>
+        <li>Modeling assets (12 hours @ ~1.5 hrs per asset)</li>
+        <li>UV unwrapping (4 hours)</li>
+        <li>Material/texture creation (4 hours)</li>
+        <li>Export and format conversion (2 hours)</li>
+        <li>Documentation and preview renders (3 hours)</li>
+    </ol>
+    <p><strong>Dependencies:</strong> Environment designs completed to inform asset needs</p>
+    <p><strong>Time Estimate:</strong> 27 hours (Weeks 3-6)</p>
+
+    <h3>Deliverable 4: Digital Art Portfolio Pieces</h3>
+    <p><strong>Description:</strong> 3-5 digital art pieces for portfolio presentation (banners, thumbnails, concept art).</p>
+    <p><strong>Definition of Done:</strong></p>
+    <ul>
+        <li>3-5 completed digital art pieces in high resolution</li>
+        <li>Consistent visual style and branding established</li>
+        <li>Multiple format exports (PNG, JPG) for different uses</li>
+        <li>Organized in portfolio structure</li>
+        <li>Peer feedback collected and revisions completed</li>
+    </ul>
+    <p><strong>Tasks:</strong></p>
+    <ol>
+        <li>Style exploration and references (3 hours)</li>
+        <li>Create piece #1 (banner/header) (4 hours)</li>
+        <li>Create pieces #2-3 (thumbnails/icons) (6 hours)</li>
+        <li>Create pieces #4-5 (concept art) (6 hours)</li>
+        <li>Revisions based on feedback (3 hours)</li>
+    </ol>
+    <p><strong>Dependencies:</strong> None (can be done in parallel)</p>
+    <p><strong>Time Estimate:</strong> 22 hours (Weeks 2-7)</p>
+
+    <h3>Deliverable 5: Production Workflow Documentation</h3>
+    <p><strong>Description:</strong> Complete documentation of folder structure, naming conventions, and production pipeline.</p>
+    <p><strong>Definition of Done:</strong></p>
+    <ul>
+        <li>Folder structure established and documented</li>
+        <li>Naming convention guide created</li>
+        <li>Version control system set up</li>
+        <li>Backup strategy implemented and tested</li>
+        <li>Process documentation written with examples</li>
+        <li>Template files created for future projects</li>
+    </ul>
+    <p><strong>Tasks:</strong></p>
+    <ol>
+        <li>Design folder structure (2 hours)</li>
+        <li>Create naming convention standards (2 hours)</li>
+        <li>Set up version control (GitHub/backup) (3 hours)</li>
+        <li>Write process documentation (4 hours)</li>
+        <li>Create template files and checklists (3 hours)</li>
+    </ol>
+    <p><strong>Dependencies:</strong> Must be established early (Week 1-2)</p>
+    <p><strong>Time Estimate:</strong> 14 hours (Weeks 1-2, with updates throughout)</p>
+</section>
+
+<h2 id="milestones-timeline">7. Milestones &amp; Timeline</h2>
+<section class="card">
+    <ul>
+        <li><strong>Week 1-2:</strong> Setup tools, templates, folder structure, and references (Deliverable 5)</li>
+        <li><strong>Week 3-4:</strong> Create map blockouts &amp; greybox for Environment #1 (Deliverable 1)</li>
+        <li><strong>Week 5-6:</strong> Complete Environment #2 and 3D Asset Pack (Deliverables 2 & 3)</li>
+        <li><strong>Week 7:</strong> Finalize digital art pieces and conduct peer reviews (Deliverable 4)</li>
+        <li><strong>Week 8:</strong> Portfolio publishing, documentation finalization, and project presentation</li>
+    </ul>
+</section>
+
+<h2 id="methodology">8. Project Methodology</h2>
+<section class="card">
+    <h3>Methodology Explanation</h3>
+    <p>The project uses an iterative approach inspired by Agile, organized in short sprints with a clear Definition of Done (DoD), peer review, and deliverables for each iteration. Each sprint produces an increment such as design document updates, map/environment assets, and layout passes.</p>
+
+    <h3>Methodology Diagram</h3>
+    <ol>
+        <li><strong>Plan</strong> – Define goals, constraints, and references</li>
+        <li><strong>Build</strong> – Create blockouts, assets, and layout integrations</li>
+        <li><strong>Review</strong> – Collect peer feedback and testing notes</li>
+        <li><strong>Polish</strong> – Improve visuals, clarity, and presentation</li>
+        <li><strong>Publish</strong> – Package outputs, create README, and update portfolio</li>
+    </ol>
+
+    <h3>Project Tool Selection</h3>
+    <div class="two-col-grid">
+        <div>
+            <p><strong>Tools Explored:</strong></p>
+            <ul>
+                <li>Notion – Docs, kanban, templates (free tier)</li>
+                <li>ClickUp – Tasks, docs, automations (free tier)</li>
+                <li>Jira – Sprint boards, issue types (free tier for small teams)</li>
+            </ul>
+        </div>
+        <div>
+            <p><strong>Final Choice &amp; Rationale:</strong> <em>ClickUp</em> offers a balanced mix of docs + tasks, custom statuses, and simple sprint views that align with the iterative method without heavy admin overhead.</p>
+            <p><strong>Key Features:</strong></p>
+            <ul>
+                <li>Custom statuses and templates to enforce DoD</li>
+                <li>Kanban, List, and Calendar views for planning</li>
+                <li>Checklists for asset and publishing steps</li>
+            </ul>
+            <p style="color:var(--muted);">Cost: Free tier is sufficient; upgrades optional.</p>
+        </div>
+    </div>
+</section>
+
+<h2 id="risks-mitigations">9. Risks &amp; Mitigations</h2>
+<section class="card two-col-grid">
+    <div>
+        <h3>Top Risks</h3>
+        <ul>
+            <li>Scope creep across assets and maps</li>
+            <li>Time compression near deliverable dates</li>
+            <li>Version drift between docs and asset packs</li>
+            <li>Technical issues with software or export formats</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Mitigations</h3>
+        <ul>
+            <li>Sprint caps + change log to track scope</li>
+            <li>Weekly mini-reviews against DoD</li>
+            <li>Repository structure and tags for releases</li>
+            <li>Test exports early and maintain backup files</li>
+        </ul>
+    </div>
+</section>
+
+<h2 id="success-metrics">10. Success Metrics</h2>
+<section class="card">
+    <ul>
+        <li><strong>Maps:</strong> ≥ 2 shipped layouts with publish-ready docs</li>
+        <li><strong>Assets:</strong> ≥ 5 game-ready 3D assets with proper exports</li>
+        <li><strong>Art Pieces:</strong> ≥ 3 digital art pieces completed</li>
+        <li><strong>Review Quality:</strong> ≥ 80% checklist pass on DoD for each deliverable</li>
+        <li><strong>Iteration Speed:</strong> Average sprint cycle ≤ 7 days</li>
+        <li><strong>Portfolio Impact:</strong> Updated showcase with screenshots, descriptions, and technical notes</li>
+    </ul>
+</section>
+
+<footer style="max-width:900px;margin:20px auto 40px auto;text-align:center;color:#6c757d;font-size:13px;">
+      © 2025 • Content Creation Environment • <span style="border:1px solid #ced4da;border-radius:999px;padding:4px 10px;">Cal State LA</span>
+    </footer>
+    </main>
+  </div>
+  <footer class="footer">© 2025 • Content Creation Environment • <span class="badge">Cal State LA</span></footer>
+</div>
+<script>
+(function(){
+  const content = document.getElementById('content');
+  let hdrs = Array.from(content.querySelectorAll('h2'));
+  if(!hdrs.length) hdrs = Array.from(content.querySelectorAll('h3'));
+  const tocList = document.getElementById('toc-list');
+  const used = new Map();
+  function slugify(t){
+    const base = (t||'section').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'section';
+    let s = base, i = 2;
+    while(used.has(s)) { s = base + '-' + i++; }
+    used.set(s,true); return s;
+  }
+
+  // Build collapsible sections
+  if(hdrs.length){
+    const kids = Array.from(content.childNodes);
+    const newNodes = [];
+    let i = 0;
+    while(i < kids.length){
+      const node = kids[i];
+      if(node.nodeType === 1 && (node.tagName === 'H2' || node.tagName === 'H3')){
+        const header = node; const level = header.tagName;
+        const id = (header.id && !used.has(header.id) ? (used.set(header.id,true), header.id) : slugify(header.textContent));
+        const details = document.createElement('details');
+        details.id = id; details.open = false;
+        const anchor = document.createElement('span');
+        anchor.id = id + '-anchor';
+        anchor.className = 'anchor';
+        const summary = document.createElement('summary');
+        summary.appendChild(document.createTextNode(header.textContent));
+        const bodyDiv = document.createElement('div'); bodyDiv.className = 'sec-body';
+        // collect siblings
+        i++;
+        while(i < kids.length){
+          const next = kids[i];
+          if(next.nodeType === 1 && (next.tagName === level)) break;
+          bodyDiv.appendChild(next); i++;
+        }
+        details.appendChild(anchor);
+        details.appendChild(summary);
+        details.appendChild(bodyDiv);
+        newNodes.push(details);
+        // TOC item
+        if(tocList){
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = '#' + id; a.textContent = header.textContent;
+          a.addEventListener('click', function(e){ e.preventDefault(); openSectionById(id, true); });
+          li.appendChild(a); tocList.appendChild(li);
+        }
+      } else { newNodes.push(node); i++; }
+    }
+    content.innerHTML = ''; newNodes.forEach(n => content.appendChild(n));
+  }
+
+  // Expand/Collapse controls
+  const expandBtn = document.getElementById('expand-all');
+  const collapseBtn = document.getElementById('collapse-all');
+  function allDetails(){ return Array.from(content.querySelectorAll('details')); }
+  function expandAll(){ allDetails().forEach(d => { d.open = true; }); }
+  function collapseAll(){ allDetails().forEach(d => { d.open = false; }); }
+  expandBtn && expandBtn.addEventListener('click', function(e){ e.preventDefault(); expandAll(); });
+  collapseBtn && collapseBtn.addEventListener('click', function(e){ e.preventDefault(); collapseAll(); });
+
+  // Open & scroll helper
+  function openSectionById(id, push){
+    let target = document.getElementById(id);
+    if(!target){
+      const alt = document.getElementById(id + '-anchor');
+      if(alt) target = alt.closest('details');
+    }
+    const details = target && (target.tagName==='DETAILS' ? target : target.closest && target.closest('details'));
+    if(details){ details.open = true; if(push){ try{ history.pushState(null,'','#'+details.id); }catch(e){} } details.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+
+  // Intercept any in-page hash link
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const id = decodeURIComponent(a.getAttribute('href').slice(1));
+    if(!id) return;
+    const exists = document.getElementById(id) || document.getElementById(id + '-anchor');
+    if(exists){ e.preventDefault(); openSectionById(id, true); }
+  });
+
+  // Deep-link on load and hash changes
+  function handleHash(){
+    const id = decodeURIComponent(location.hash.slice(1));
+    if(!id) return;
+    setTimeout(()=>openSectionById(id,false), 0);
+  }
+  window.addEventListener('hashchange', handleHash);
+  handleHash();
+})();
+</script>
+</body>
+</html>
