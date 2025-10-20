@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PMI Principle: Navigate Complexity — Interactive Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0e13;--panel:#121722;--ink:#e8eefc;--muted:#a6b3d6;--accent:#7c9cff;--accent-2:#29d3c5;--warn:#ffcf5a;--danger:#ff6b6b;
+      --card:#151b28;--border:#2a3346;--ok:#7bf59b
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0b0e13 0%,#0e1420 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    .app{display:grid;grid-template-rows:auto 1fr auto;min-height:100dvh}
+    header{display:flex;gap:.75rem;align-items:center;justify-content:space-between;padding:.8rem 1rem;border-bottom:1px solid var(--border);background:rgba(18,23,34,.75);backdrop-filter:saturate(140%) blur(8px);position:sticky;top:0;z-index:50}
+    header .brand{display:flex;gap:.6rem;align-items:center}
+    .dot{width:12px;height:12px;border-radius:50%;background:conic-gradient(from 90deg,var(--accent),var(--accent-2));box-shadow:0 0 0 3px rgba(124,156,255,.12)}
+    .brand h1{font-size:1rem;margin:0;font-weight:800;letter-spacing:.3px}
+    .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+    button, .btn{appearance:none;border:1px solid var(--border);background:linear-gradient(180deg,#182033,#121826);color:var(--ink);padding:.55rem .8rem;border-radius:.8rem;font-weight:600;cursor:pointer;transition:.2s transform, .2s background, .2s opacity}
+    button:hover{transform:translateY(-1px)}
+    .btn-ghost{background:transparent}
+    .btn-primary{background:linear-gradient(180deg,#3a57ff,#2f49d8);border-color:#3a57ff}
+    .btn-success{background:linear-gradient(180deg,#18c280,#0ea568);border-color:#18c280}
+    .btn-danger{background:linear-gradient(180deg,#ff6b6b,#e55858);border-color:#ff6b6b}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(124,156,255,.1);border:1px solid var(--border);padding:.25rem .55rem;border-radius:.6rem;color:var(--muted);font-size:.78rem}
+    .deck{position:relative;overflow:hidden}
+    .slide{position:absolute;inset:0;padding:clamp(16px,4vw,48px);display:none}
+    .slide.active{display:block;animation:fade .35s ease}
+    @keyframes fade{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:clamp(16px,3vw,28px);box-shadow:0 6px 40px rgba(0,0,0,.35)}
+    .title{font-size:clamp(22px,3.5vw,38px);font-weight:800;margin:.2rem 0 1rem}
+    .lead{color:var(--muted);font-size:clamp(14px,1.6vw,18px);line-height:1.6}
+    .grid{display:grid;gap:1rem}
+    @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+    .kpi{display:flex;gap:.8rem;align-items:center}
+    .kpi .dot{width:10px;height:10px}
+    .progress{height:6px;background:#0f1320;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+    .progress > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
+    .hint{font-size:.9rem;color:var(--muted)}
+    .stack{display:flex;gap:.6rem;flex-wrap:wrap}
+    .list{margin:.6rem 0 0;padding-left:1.1rem}
+    .list li{margin:.25rem 0}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:.8rem;padding:.8rem}
+    .pill{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);background:#0f1420;border-radius:999px;padding:.35rem .7rem;color:var(--muted);font-size:.82rem}
+    .footer{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.7rem 1rem;border-top:1px solid var(--border);background:rgba(10,12,18,.75)}
+    .sr-only{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+    /* Poll */
+    .bars{display:grid;gap:.6rem;margin-top:.6rem}
+    .bar{display:grid;grid-template-columns:120px 1fr minmax(48px,64px);align-items:center;gap:.6rem}
+    .bar .track{height:12px;background:#0c1220;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+    .track .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .35s}
+    .bar .pct{font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+    /* Presenter notes drawer */
+    .drawer{position:fixed;inset:auto 0 0 0;background:rgba(15,20,32,.98);border-top:1px solid var(--border);transform:translateY(110%);transition:transform .3s;z-index:60}
+    .drawer.open{transform:none}
+    .drawer header{position:static;border:0;background:transparent;padding:.8rem 1rem}
+    textarea{width:100%;min-height:120px;background:#0e1422;border:1px solid var(--border);border-radius:.6rem;color:var(--ink);padding:.7rem;font-family:inherit}
+    /* Agenda chips */
+    .agenda{display:flex;flex-wrap:wrap;gap:.5rem}
+    .agenda .chip{border:1px dashed var(--border);padding:.35rem .7rem;border-radius:.7rem;color:var(--muted)}
+    /* Minimal link style */
+    a{color:var(--accent)}
+  </style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <div class="brand"><span class="dot" aria-hidden="true"></span><h1>Navigate Complexity — PMI Principle</h1></div>
+    <div class="controls">
+      <span class="badge" id="clock">00:00</span>
+      <button class="btn-ghost" id="prevBtn" title="Prev (←)">◀ Prev</button>
+      <button class="btn-ghost" id="nextBtn" title="Next (→)">Next ▶</button>
+      <button class="btn" id="notesBtn" title="Presenter Notes">🗒️ Notes</button>
+      <button class="btn" id="timerBtn" title="Start/Stop Segment Timer">⏱️ Timer</button>
+      <button class="btn-primary" id="printBtn" title="Print or Save as PDF">🖨️ Export</button>
+    </div>
+  </header>
+
+  <main class="deck" id="deck" aria-live="polite">
+    <!-- 0. Title / Cover -->
+    <section class="slide active" data-title="Cover">
+      <div class="grid cols-2">
+        <div class="card">
+          <div class="pill">PMI Principle</div>
+          <h2 class="title">Navigate <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Complexity</span></h2>
+          <p class="lead">Template to present how project managers handle complex situations by breaking work into smaller, manageable parts using real examples and interactive moments.</p>
+          <div class="agenda" aria-label="Agenda chips">
+            <span class="chip">Part 1 · Definition (≤ 3 min)</span>
+            <span class="chip">Part 2 · Supplemental (≤ 7 min)</span>
+            <span class="chip">Interactive Poll</span>
+            <span class="chip">Takeaways & Key Lesson</span>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="kpi"><span class="dot"></span><strong>How to use:</strong></div>
+          <ol class="list">
+            <li>Replace placeholders with your content.</li>
+            <li>Use <em>← / →</em> or the buttons to navigate.</li>
+            <li>Start the timer per section (<strong>3m</strong> for Part 1, <strong>7m</strong> for Part 2).</li>
+            <li>Run the live poll and discuss results.</li>
+            <li>Export as PDF via <strong>🖨️ Export</strong>.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Agenda -->
+    <section class="slide" data-title="Agenda">
+      <div class="card">
+        <h2 class="title">Agenda</h2>
+        <div class="grid cols-2">
+          <div>
+            <h3>Part 1 — Brief Definition (≤ 3 min)</h3>
+            <ul class="list">
+              <li>High-level definition of <em>Navigate Complexity</em>.</li>
+              <li>Why it matters for project managers.</li>
+              <li>One intro slide to set the stage.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Part 2 — Supplemental (≤ 7 min)</h3>
+            <ul class="list">
+              <li><strong>Option A:</strong> Real-World Example</li>
+              <li><strong>Option B:</strong> Case Study</li>
+              <li><strong>Option C:</strong> Interview / Insight</li>
+              <li><strong>Option D:</strong> Interactive Activity (Poll)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="progress" aria-label="Progress"><span id="prog" style="width:0"></span></div>
+        <p class="hint">Tip: Use only 1–2 bullets per click when presenting.</p>
+      </div>
+    </section>
+
+    <!-- 2. Part 1: Definition -->
+    <section class="slide" data-title="Part 1 — Definition">
+      <div class="card">
+        <div class="pill">Part 1 · ≤ 3 minutes</div>
+        <h2 class="title">What is “Navigate Complexity”?</h2>
+        <div class="grid cols-2">
+          <div>
+            <p class="lead"><strong>Definition (edit me):</strong> The disciplined practice of understanding interconnected factors, uncertainty, and change—then breaking work into smaller, testable, and manageable parts to create clarity and deliver value.</p>
+            <ul class="list">
+              <li><strong>Why it matters:</strong> reduces risk, improves decisions, and keeps teams aligned.</li>
+              <li><strong>How it looks:</strong> mapping dependencies, slicing scope, iterating with feedback.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kpi"><span class="dot"></span><strong>Presenter prompt</strong></div>
+            <ul class="list">
+              <li>Share a quick scenario where ambiguity could stall progress.</li>
+              <li>Show how you’d decompose it into <em>manageable</em> parts.</li>
+              <li>Set up a hook for the supplemental section.</li>
+            </ul>
+            <div class="stack" style="margin-top:.5rem">
+              <span class="badge">⏱ target: 3:00</span>
+              <span class="badge">🎯 objective: clarity</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Part 2 selector / instructions -->
+    <section class="slide" data-title="Part 2 — Choose Your Path">
+      <div class="card">
+        <div class="pill">Part 2 · ≤ 7 minutes</div>
+        <h2 class="title">Supplemental Understanding — Pick One</h2>
+        <div class="grid cols-2">
+          <div>
+            <ol class="list">
+              <li><strong>Option A: Real-World Example</strong> — e.g., SpaceX launch, healthcare rollout, Verizon 5G. Explain moving parts, tools, and simplifications.</li>
+              <li><strong>Option B: Case Study</strong> — success or failure. What made it complex? How did the principle apply?</li>
+              <li><strong>Option C: Interview / Insight</strong> — summarize a PM’s view on handling complexity.</li>
+              <li><strong>Option D: Interactive Poll</strong> — quick 1–2 min class poll.</li>
+            </ol>
+            <p class="hint">Use the toggle below to reveal the slide template you plan to use.</p>
+            <div class="stack">
+              <button class="btn" data-reveal="optA">Show Option A</button>
+              <button class="btn" data-reveal="optB">Show Option B</button>
+              <button class="btn" data-reveal="optC">Show Option C</button>
+              <button class="btn" data-reveal="optD">Show Option D</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="kpi"><span class="dot"></span><strong>Timing aid</strong></div>
+            <ul class="list">
+              <li>Set timer to <strong>7:00</strong> for this section.</li>
+              <li>Leave room for Q&A or poll debrief.</li>
+            </ul>
+            <div class="stack" style="margin-top:.5rem"><span class="badge">⏱ target: 7:00</span><span class="badge">📌 pick one</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4A. Option A — Real-World Example template -->
+    <section class="slide" data-title="Option A — Real-World Example" data-opt="optA">
+      <div class="card">
+        <h2 class="title">Real-World Example (edit)</h2>
+        <div class="grid cols-2">
+          <div>
+            <p class="lead"><strong>Context:</strong> [Project/Domain]. Scope spanned [systems/teams/regions]. High uncertainty in [requirements, technology, compliance, vendors].</p>
+            <ul class="list">
+              <li><strong>Moving parts:</strong> [dependencies], [stakeholders], [regulatory constraints].</li>
+              <li><strong>Tools:</strong> roadmaps, Kanban/Scrum, dependency boards, risk burndown, architecture diagrams.</li>
+              <li><strong>Simplifications:</strong> sliced scope by value/feasibility, ran pilots, created integration contracts.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kpi"><span class="dot"></span><strong>Outcome / Evidence</strong></div>
+            <ul class="list">
+              <li>KPIs: lead time ↓, quality ↑, risk exposure ↓.</li>
+              <li>Milestones: <em>M1</em>, <em>M2</em>, <em>M3</em>.</li>
+              <li>Lesson: breaking complexity into structure enabled steady delivery.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4B. Option B — Case Study template -->
+    <section class="slide" data-title="Option B — Case Study" data-opt="optB">
+      <div class="card">
+        <h2 class="title">Case Study (edit)</h2>
+        <div class="grid cols-2">
+          <div>
+            <p class="lead"><strong>Story:</strong> [Success/Failure] of [initiative].</p>
+            <ul class="list">
+              <li><strong>Complexity drivers:</strong> ambiguity, inter-team dependencies, tech debt, governance, compliance.</li>
+              <li><strong>What helped:</strong> surfacing constraints, mapping value streams, iterative delivery, decision logs.</li>
+              <li><strong>What hurt:</strong> late integration, unclear ownership, oversized batches.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kpi"><span class="dot"></span><strong>Apply the Principle</strong></div>
+            <ul class="list">
+              <li>Decompose: define thin vertical slices.</li>
+              <li>Visualize: dependency boards, risk matrix.</li>
+              <li>Probe–Sense–Respond: use pilots to learn safely.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4C. Option C — Interview / Insight template -->
+    <section class="slide" data-title="Option C — Interview / Insight" data-opt="optC">
+      <div class="card">
+        <h2 class="title">Professional Insight (edit)</h2>
+        <div class="grid cols-2">
+          <div>
+            <p class="lead"><strong>Quote or summary:</strong> “[…]” — <em>[Name], [Role/Company]</em></p>
+            <ul class="list">
+              <li>What they do when complexity rises.</li>
+              <li>Frameworks or heuristics they trust.</li>
+              <li>One actionable takeaway for the class.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kpi"><span class="dot"></span><strong>Decomposition Moves</strong></div>
+            <ul class="list">
+              <li>Slice by risk, value, and uncertainty.</li>
+              <li>Expose interfaces and contracts early.</li>
+              <li>Shorten feedback loops; inspect/adapt.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4D. Option D — Interactive Poll (also available as standalone) -->
+    <section class="slide" data-title="Option D — Interactive Poll" data-opt="optD">
+      <div class="card">
+        <h2 class="title">Class Poll: What feels most complex in group projects?</h2>
+        <p class="lead">Pick one. Results update live.</p>
+        <div class="stack" role="group" aria-label="Poll choices">
+          <button class="btn" data-vote="time">⏳ Time</button>
+          <button class="btn" data-vote="communication">💬 Communication</button>
+          <button class="btn" data-vote="roles">🧩 Roles</button>
+          <button class="btn-ghost" id="resetPoll">Reset</button>
+        </div>
+        <div class="bars" aria-live="polite">
+          <div class="bar"><div>⏳ Time</div><div class="track"><span class="fill" id="bar-time"></span></div><div class="pct" id="pct-time">0%</div></div>
+          <div class="bar"><div>💬 Communication</div><div class="track"><span class="fill" id="bar-communication"></span></div><div class="pct" id="pct-communication">0%</div></div>
+          <div class="bar"><div>🧩 Roles</div><div class="track"><span class="fill" id="bar-roles"></span></div><div class="pct" id="pct-roles">0%</div></div>
+        </div>
+        <p class="hint">Use the results to segue into how decomposition clarifies <em>timeboxes</em>, <em>interfaces</em>, and <em>responsibilities</em>.</p>
+      </div>
+    </section>
+
+    <!-- 5. Final Section: Takeaways -->
+    <section class="slide" data-title="Takeaways & Insights">
+      <div class="card">
+        <h2 class="title">Takeaways & Insights</h2>
+        <div class="grid cols-2">
+          <div>
+            <ul class="list">
+              <li><strong>Value:</strong> navigating complexity reduces risk and increases delivery confidence.</li>
+              <li><strong>Challenge:</strong> uncertainty and interdependence make plans fragile.</li>
+              <li><strong>Approach:</strong> structure work, visualize dependencies, iterate, and learn.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kpi"><span class="dot"></span><strong>Discussion prompt</strong></div>
+            <ul class="list">
+              <li>Which decomposition strategy resonated most?</li>
+              <li>Where could you shorten feedback loops in your projects?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Key Lesson -->
+    <section class="slide" data-title="Key Lesson">
+      <div class="card">
+        <h2 class="title">Key Lesson</h2>
+        <p class="lead"><strong>Breaking complexity into structure leads to clarity and success.</strong> When systems, stakeholders, and uncertainty multiply, <em>decompose, visualize, and iterate</em>.</p>
+        <div class="stack">
+          <span class="badge">🧭 navigate</span>
+          <span class="badge">🗺️ map</span>
+          <span class="badge">🔁 iterate</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="stack">
+      <span class="pill">← / → to navigate</span>
+      <span class="pill">S to toggle notes</span>
+      <span class="pill">T to start/stop timer</span>
+    </div>
+    <div class="progress" style="width:min(460px,40vw)"><span id="progFooter"></span></div>
+  </footer>
+
+  <!-- Presenter notes drawer -->
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <header>
+      <div class="brand"><span class="dot"></span><h1>Presenter Notes</h1></div>
+      <div class="controls"><button class="btn-ghost" id="closeNotes">Close</button></div>
+    </header>
+    <div style="padding:0 1rem 1rem">
+      <textarea id="notes" placeholder="Type your speaker notes for the current slide here… (saved locally in this browser)"></textarea>
+      <p class="hint">Notes are stored per slide in your browser only.</p>
+    </div>
+  </aside>
+</div>
+
+<script>
+  // --- Slide nav ---
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  const deck = document.getElementById('deck');
+  const prog = document.getElementById('prog');
+  const progFooter = document.getElementById('progFooter');
+  function show(i){
+    idx = Math.max(0, Math.min(slides.length-1, i));
+    slides.forEach((s,j)=>s.classList.toggle('active', j===idx));
+    const pct = ((idx+1)/slides.length*100).toFixed(1)+'%';
+    if(prog) prog.style.width = pct; if(progFooter) progFooter.style.width = pct;
+    loadNotes();
+  }
+  function next(){ show(idx+1)}
+  function prev(){ show(idx-1)}
+  document.getElementById('nextBtn').onclick=next;
+  document.getElementById('prevBtn').onclick=prev;
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight') next();
+    if(e.key==='ArrowLeft') prev();
+    if(e.key.toLowerCase()==='s') toggleNotes();
+    if(e.key.toLowerCase()==='t') toggleTimer();
+  });
+
+  // --- Segment timer ---
+  const clock = document.getElementById('clock');
+  let timer=null, startTs=null, target=0; // target in seconds
+  function fmt(sec){const m=Math.floor(sec/60), s=Math.floor(sec%60);return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+  function guessTarget(){
+    const t = slides[idx]?.dataset.title||'';
+    if(t.includes('Part 1')) return 3*60; // 3 minutes
+    if(t.includes('Part 2')) return 7*60; // 7 minutes
+    return 0;
+  }
+  function tick(){
+    const elapsed = (Date.now()-startTs)/1000; const remaining = Math.max(0, target? (target-elapsed): elapsed);
+    clock.textContent = fmt(remaining);
+    if(target && remaining<=0){ clearInterval(timer); timer=null; flash(clock) }
+  }
+  function flash(el){ el.animate([{opacity:1},{opacity:.1},{opacity:1}],{duration:900,iterations:4}) }
+  function toggleTimer(){
+    if(timer){ clearInterval(timer); timer=null; return }
+    target = guessTarget(); startTs = Date.now(); timer=setInterval(tick,200); tick();
+  }
+  document.getElementById('timerBtn').onclick=toggleTimer;
+
+  // --- Presenter notes (localStorage per slide) ---
+  const drawer = document.getElementById('drawer');
+  const notesEl = document.getElementById('notes');
+  function keyFor(i){return `notes_slide_${i}`}
+  function toggleNotes(){ drawer.classList.toggle('open'); drawer.setAttribute('aria-hidden', !drawer.classList.contains('open')) }
+  function loadNotes(){ notesEl.value = localStorage.getItem(keyFor(idx))||'' }
+  notesEl?.addEventListener('input',()=> localStorage.setItem(keyFor(idx), notesEl.value));
+  document.getElementById('notesBtn').onclick=toggleNotes;
+  document.getElementById('closeNotes').onclick=toggleNotes;
+
+  // --- Export (print to PDF) ---
+  document.getElementById('printBtn').onclick=()=> window.print();
+
+  // --- Reveal chosen Option (Part 2) ---
+  document.querySelectorAll('[data-reveal]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const tag = btn.getAttribute('data-reveal');
+      slides.forEach(s=>{ if(s.dataset.opt){ s.style.display = (s.dataset.opt===tag)? 'block':'none' } });
+      // Jump to first matching slide
+      const i = slides.findIndex(s=> s.dataset.opt===tag);
+      if(i>=0) show(i);
+    })
+  })
+
+  // --- Poll logic ---
+  const state = { time:0, communication:0, roles:0 };
+  const total = ()=> state.time + state.communication + state.roles;
+  function updateBars(){
+    const sum = total()||1;
+    ['time','communication','roles'].forEach(k=>{
+      const pct = Math.round(state[k]*100/sum);
+      const fill = document.getElementById(`bar-${k}`);
+      const label = document.getElementById(`pct-${k}`);
+      if(fill){ fill.style.width = pct+'%'; }
+      if(label){ label.textContent = pct+'%'; }
+    });
+  }
+  document.querySelectorAll('[data-vote]').forEach(btn=>{
+    btn.addEventListener('click',()=>{ const k = btn.getAttribute('data-vote'); state[k]++; updateBars(); })
+  })
+  document.getElementById('resetPoll').onclick=()=>{ state.time=state.communication=state.roles=0; updateBars(); }
+
+  // Initialize
+  show(0); updateBars();
+</script>
+</body>
+</html>
