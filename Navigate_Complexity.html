@@ -2,446 +2,544 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PMI Principle: Navigate Complexity — Interactive Template</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navigating Complexity — Class Presentation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root{
-      --bg:#0b0e13;--panel:#121722;--ink:#e8eefc;--muted:#a6b3d6;--accent:#7c9cff;--accent-2:#29d3c5;--warn:#ffcf5a;--danger:#ff6b6b;
-      --card:#151b28;--border:#2a3346;--ok:#7bf59b
+    /* === Base style copied to match the provided governance deck === */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
+    body{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#333;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+    .container{max-width:1200px;width:100%;background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,.2)}
+    header{background:linear-gradient(to right,#2c3e50,#4ca1af);color:#fff;padding:25px;text-align:center}
+    h1{font-size:2.2rem;margin-bottom:8px}
+    .subtitle{font-size:1.1rem;opacity:.95}
+    .authors{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .author{background:rgba(255,255,255,.2);padding:6px 12px;border-radius:20px;font-size:.9rem}
+
+    .content{display:flex;height:600px}
+    .sidebar{width:250px;background:#f5f7fa;padding:20px;overflow-y:auto;border-right:1px solid #e0e6ed}
+    .sidebar h3{color:#2c3e50;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #4ca1af}
+    .nav-item{padding:12px 15px;margin-bottom:8px;border-radius:8px;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:10px}
+    .nav-item:hover{background:#e3e8f0}
+    .nav-item.active{background:#4ca1af;color:#fff}
+
+    .main-content{flex:1;padding:25px;overflow-y:auto;position:relative}
+    .section{display:none}
+    .section.active{display:block;animation:fadeIn .5s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    h2{color:#2c3e50;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #4ca1af}
+    h3{color:#2c3e50;margin:12px 0 8px}
+    p,li{line-height:1.6;margin-bottom:12px}
+    ul{padding-left:20px;margin-bottom:12px}
+
+    .card{background:#f8fafc;border-left:4px solid #4ca1af;padding:15px;border-radius:0 8px 8px 0;margin-bottom:16px}
+    .cols{display:grid;gap:14px}
+    .cols-2{grid-template-columns:1fr 1fr}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+
+    .comparison{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+    .pill{display:inline-block;background:#eef3f8;border:1px solid #e0e6ed;padding:6px 10px;border-radius:999px;font-size:.85rem;margin-right:6px}
+
+    .navigation{display:flex;justify-content:space-between;padding:20px;border-top:1px solid #e0e6ed}
+    button{padding:12px 25px;background:#4ca1af;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:500;transition:.3s}
+    button:hover{background:#3a8d9c;transform:translateY(-2px)}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .content{flex-direction:column;height:auto}
+      .sidebar{width:100%;border-right:none;border-bottom:1px solid #e0e6ed}
+      .cols-3{grid-template-columns:1fr}
+      .cols-2{grid-template-columns:1fr}
+      .comparison{grid-template-columns:1fr}
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,#0b0e13 0%,#0e1420 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
-    .app{display:grid;grid-template-rows:auto 1fr auto;min-height:100dvh}
-    header{display:flex;gap:.75rem;align-items:center;justify-content:space-between;padding:.8rem 1rem;border-bottom:1px solid var(--border);background:rgba(18,23,34,.75);backdrop-filter:saturate(140%) blur(8px);position:sticky;top:0;z-index:50}
-    header .brand{display:flex;gap:.6rem;align-items:center}
-    .dot{width:12px;height:12px;border-radius:50%;background:conic-gradient(from 90deg,var(--accent),var(--accent-2));box-shadow:0 0 0 3px rgba(124,156,255,.12)}
-    .brand h1{font-size:1rem;margin:0;font-weight:800;letter-spacing:.3px}
-    .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-    button, .btn{appearance:none;border:1px solid var(--border);background:linear-gradient(180deg,#182033,#121826);color:var(--ink);padding:.55rem .8rem;border-radius:.8rem;font-weight:600;cursor:pointer;transition:.2s transform, .2s background, .2s opacity}
-    button:hover{transform:translateY(-1px)}
-    .btn-ghost{background:transparent}
-    .btn-primary{background:linear-gradient(180deg,#3a57ff,#2f49d8);border-color:#3a57ff}
-    .btn-success{background:linear-gradient(180deg,#18c280,#0ea568);border-color:#18c280}
-    .btn-danger{background:linear-gradient(180deg,#ff6b6b,#e55858);border-color:#ff6b6b}
-    .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(124,156,255,.1);border:1px solid var(--border);padding:.25rem .55rem;border-radius:.6rem;color:var(--muted);font-size:.78rem}
-    .deck{position:relative;overflow:hidden}
-    .slide{position:absolute;inset:0;padding:clamp(16px,4vw,48px);display:none}
-    .slide.active{display:block;animation:fade .35s ease}
-    @keyframes fade{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:clamp(16px,3vw,28px);box-shadow:0 6px 40px rgba(0,0,0,.35)}
-    .title{font-size:clamp(22px,3.5vw,38px);font-weight:800;margin:.2rem 0 1rem}
-    .lead{color:var(--muted);font-size:clamp(14px,1.6vw,18px);line-height:1.6}
-    .grid{display:grid;gap:1rem}
-    @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}}
-    .kpi{display:flex;gap:.8rem;align-items:center}
-    .kpi .dot{width:10px;height:10px}
-    .progress{height:6px;background:#0f1320;border:1px solid var(--border);border-radius:999px;overflow:hidden}
-    .progress > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
-    .hint{font-size:.9rem;color:var(--muted)}
-    .stack{display:flex;gap:.6rem;flex-wrap:wrap}
-    .list{margin:.6rem 0 0;padding-left:1.1rem}
-    .list li{margin:.25rem 0}
-    .panel{background:var(--panel);border:1px solid var(--border);border-radius:.8rem;padding:.8rem}
-    .pill{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);background:#0f1420;border-radius:999px;padding:.35rem .7rem;color:var(--muted);font-size:.82rem}
-    .footer{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.7rem 1rem;border-top:1px solid var(--border);background:rgba(10,12,18,.75)}
-    .sr-only{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
-    /* Poll */
-    .bars{display:grid;gap:.6rem;margin-top:.6rem}
-    .bar{display:grid;grid-template-columns:120px 1fr minmax(48px,64px);align-items:center;gap:.6rem}
-    .bar .track{height:12px;background:#0c1220;border:1px solid var(--border);border-radius:999px;overflow:hidden}
-    .track .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .35s}
-    .bar .pct{font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
-    /* Presenter notes drawer */
-    .drawer{position:fixed;inset:auto 0 0 0;background:rgba(15,20,32,.98);border-top:1px solid var(--border);transform:translateY(110%);transition:transform .3s;z-index:60}
-    .drawer.open{transform:none}
-    .drawer header{position:static;border:0;background:transparent;padding:.8rem 1rem}
-    textarea{width:100%;min-height:120px;background:#0e1422;border:1px solid var(--border);border-radius:.6rem;color:var(--ink);padding:.7rem;font-family:inherit}
-    /* Agenda chips */
-    .agenda{display:flex;flex-wrap:wrap;gap:.5rem}
-    .agenda .chip{border:1px dashed var(--border);padding:.35rem .7rem;border-radius:.7rem;color:var(--muted)}
-    /* Minimal link style */
-    a{color:var(--accent)}
-  </style>
+    /* Responsive 16:9 video embed */
+    .video-wrap{position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#000;border:1px solid #e0e6ed}
+    .video-wrap iframe,.video-wrap video{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+    </style>
 </head>
 <body>
-<div class="app" id="app">
-  <header>
-    <div class="brand"><span class="dot" aria-hidden="true"></span><h1>Navigate Complexity — PMI Principle</h1></div>
-    <div class="controls">
-      <span class="badge" id="clock">00:00</span>
-      <button class="btn-ghost" id="prevBtn" title="Prev (←)">◀ Prev</button>
-      <button class="btn-ghost" id="nextBtn" title="Next (→)">Next ▶</button>
-      <button class="btn" id="notesBtn" title="Presenter Notes">🗒️ Notes</button>
-      <button class="btn" id="timerBtn" title="Start/Stop Segment Timer">⏱️ Timer</button>
-      <button class="btn-primary" id="printBtn" title="Print or Save as PDF">🖨️ Export</button>
-    </div>
-  </header>
-
-  <main class="deck" id="deck" aria-live="polite">
-    <!-- 0. Title / Cover -->
-    <section class="slide active" data-title="Cover">
-      <div class="grid cols-2">
-        <div class="card">
-          <div class="pill">PMI Principle</div>
-          <h2 class="title">Navigate <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Complexity</span></h2>
-          <p class="lead">Template to present how project managers handle complex situations by breaking work into smaller, manageable parts using real examples and interactive moments.</p>
-          <div class="agenda" aria-label="Agenda chips">
-            <span class="chip">Part 1 · Definition (≤ 3 min)</span>
-            <span class="chip">Part 2 · Supplemental (≤ 7 min)</span>
-            <span class="chip">Interactive Poll</span>
-            <span class="chip">Takeaways & Key Lesson</span>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="kpi"><span class="dot"></span><strong>How to use:</strong></div>
-          <ol class="list">
-            <li>Replace placeholders with your content.</li>
-            <li>Use <em>← / →</em> or the buttons to navigate.</li>
-            <li>Start the timer per section (<strong>3m</strong> for Part 1, <strong>7m</strong> for Part 2).</li>
-            <li>Run the live poll and discuss results.</li>
-            <li>Export as PDF via <strong>🖨️ Export</strong>.</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <!-- 1. Agenda -->
-    <section class="slide" data-title="Agenda">
-      <div class="card">
-        <h2 class="title">Agenda</h2>
-        <div class="grid cols-2">
-          <div>
-            <h3>Part 1 — Brief Definition (≤ 3 min)</h3>
-            <ul class="list">
-              <li>High-level definition of <em>Navigate Complexity</em>.</li>
-              <li>Why it matters for project managers.</li>
-              <li>One intro slide to set the stage.</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Part 2 — Supplemental (≤ 7 min)</h3>
-            <ul class="list">
-              <li><strong>Option A:</strong> Real-World Example</li>
-              <li><strong>Option B:</strong> Case Study</li>
-              <li><strong>Option C:</strong> Interview / Insight</li>
-              <li><strong>Option D:</strong> Interactive Activity (Poll)</li>
-            </ul>
-          </div>
-        </div>
-        <div class="progress" aria-label="Progress"><span id="prog" style="width:0"></span></div>
-        <p class="hint">Tip: Use only 1–2 bullets per click when presenting.</p>
-      </div>
-    </section>
-
-    <!-- 2. Part 1: Definition -->
-    <section class="slide" data-title="Part 1 — Definition">
-      <div class="card">
-        <div class="pill">Part 1 · ≤ 3 minutes</div>
-        <h2 class="title">What is “Navigate Complexity”?</h2>
-        <div class="grid cols-2">
-          <div>
-            <p class="lead"><strong>Definition (edit me):</strong> The disciplined practice of understanding interconnected factors, uncertainty, and change—then breaking work into smaller, testable, and manageable parts to create clarity and deliver value.</p>
-            <ul class="list">
-              <li><strong>Why it matters:</strong> reduces risk, improves decisions, and keeps teams aligned.</li>
-              <li><strong>How it looks:</strong> mapping dependencies, slicing scope, iterating with feedback.</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <div class="kpi"><span class="dot"></span><strong>Presenter prompt</strong></div>
-            <ul class="list">
-              <li>Share a quick scenario where ambiguity could stall progress.</li>
-              <li>Show how you’d decompose it into <em>manageable</em> parts.</li>
-              <li>Set up a hook for the supplemental section.</li>
-            </ul>
-            <div class="stack" style="margin-top:.5rem">
-              <span class="badge">⏱ target: 3:00</span>
-              <span class="badge">🎯 objective: clarity</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. Part 2 selector / instructions -->
-    <section class="slide" data-title="Part 2 — Choose Your Path">
-      <div class="card">
-        <div class="pill">Part 2 · ≤ 7 minutes</div>
-        <h2 class="title">Supplemental Understanding — Pick One</h2>
-        <div class="grid cols-2">
-          <div>
-            <ol class="list">
-              <li><strong>Option A: Real-World Example</strong> — e.g., SpaceX launch, healthcare rollout, Verizon 5G. Explain moving parts, tools, and simplifications.</li>
-              <li><strong>Option B: Case Study</strong> — success or failure. What made it complex? How did the principle apply?</li>
-              <li><strong>Option C: Interview / Insight</strong> — summarize a PM’s view on handling complexity.</li>
-              <li><strong>Option D: Interactive Poll</strong> — quick 1–2 min class poll.</li>
-            </ol>
-            <p class="hint">Use the toggle below to reveal the slide template you plan to use.</p>
-            <div class="stack">
-              <button class="btn" data-reveal="optA">Show Option A</button>
-              <button class="btn" data-reveal="optB">Show Option B</button>
-              <button class="btn" data-reveal="optC">Show Option C</button>
-              <button class="btn" data-reveal="optD">Show Option D</button>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="kpi"><span class="dot"></span><strong>Timing aid</strong></div>
-            <ul class="list">
-              <li>Set timer to <strong>7:00</strong> for this section.</li>
-              <li>Leave room for Q&A or poll debrief.</li>
-            </ul>
-            <div class="stack" style="margin-top:.5rem"><span class="badge">⏱ target: 7:00</span><span class="badge">📌 pick one</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4A. Option A — Real-World Example template -->
-    <section class="slide" data-title="Option A — Real-World Example" data-opt="optA">
-      <div class="card">
-        <h2 class="title">Real-World Example (edit)</h2>
-        <div class="grid cols-2">
-          <div>
-            <p class="lead"><strong>Context:</strong> [Project/Domain]. Scope spanned [systems/teams/regions]. High uncertainty in [requirements, technology, compliance, vendors].</p>
-            <ul class="list">
-              <li><strong>Moving parts:</strong> [dependencies], [stakeholders], [regulatory constraints].</li>
-              <li><strong>Tools:</strong> roadmaps, Kanban/Scrum, dependency boards, risk burndown, architecture diagrams.</li>
-              <li><strong>Simplifications:</strong> sliced scope by value/feasibility, ran pilots, created integration contracts.</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <div class="kpi"><span class="dot"></span><strong>Outcome / Evidence</strong></div>
-            <ul class="list">
-              <li>KPIs: lead time ↓, quality ↑, risk exposure ↓.</li>
-              <li>Milestones: <em>M1</em>, <em>M2</em>, <em>M3</em>.</li>
-              <li>Lesson: breaking complexity into structure enabled steady delivery.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4B. Option B — Case Study template -->
-    <section class="slide" data-title="Option B — Case Study" data-opt="optB">
-      <div class="card">
-        <h2 class="title">Case Study (edit)</h2>
-        <div class="grid cols-2">
-          <div>
-            <p class="lead"><strong>Story:</strong> [Success/Failure] of [initiative].</p>
-            <ul class="list">
-              <li><strong>Complexity drivers:</strong> ambiguity, inter-team dependencies, tech debt, governance, compliance.</li>
-              <li><strong>What helped:</strong> surfacing constraints, mapping value streams, iterative delivery, decision logs.</li>
-              <li><strong>What hurt:</strong> late integration, unclear ownership, oversized batches.</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <div class="kpi"><span class="dot"></span><strong>Apply the Principle</strong></div>
-            <ul class="list">
-              <li>Decompose: define thin vertical slices.</li>
-              <li>Visualize: dependency boards, risk matrix.</li>
-              <li>Probe–Sense–Respond: use pilots to learn safely.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4C. Option C — Interview / Insight template -->
-    <section class="slide" data-title="Option C — Interview / Insight" data-opt="optC">
-      <div class="card">
-        <h2 class="title">Professional Insight (edit)</h2>
-        <div class="grid cols-2">
-          <div>
-            <p class="lead"><strong>Quote or summary:</strong> “[…]” — <em>[Name], [Role/Company]</em></p>
-            <ul class="list">
-              <li>What they do when complexity rises.</li>
-              <li>Frameworks or heuristics they trust.</li>
-              <li>One actionable takeaway for the class.</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <div class="kpi"><span class="dot"></span><strong>Decomposition Moves</strong></div>
-            <ul class="list">
-              <li>Slice by risk, value, and uncertainty.</li>
-              <li>Expose interfaces and contracts early.</li>
-              <li>Shorten feedback loops; inspect/adapt.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4D. Option D — Interactive Poll (also available as standalone) -->
-    <section class="slide" data-title="Option D — Interactive Poll" data-opt="optD">
-      <div class="card">
-        <h2 class="title">Class Poll: What feels most complex in group projects?</h2>
-        <p class="lead">Pick one. Results update live.</p>
-        <div class="stack" role="group" aria-label="Poll choices">
-          <button class="btn" data-vote="time">⏳ Time</button>
-          <button class="btn" data-vote="communication">💬 Communication</button>
-          <button class="btn" data-vote="roles">🧩 Roles</button>
-          <button class="btn-ghost" id="resetPoll">Reset</button>
-        </div>
-        <div class="bars" aria-live="polite">
-          <div class="bar"><div>⏳ Time</div><div class="track"><span class="fill" id="bar-time"></span></div><div class="pct" id="pct-time">0%</div></div>
-          <div class="bar"><div>💬 Communication</div><div class="track"><span class="fill" id="bar-communication"></span></div><div class="pct" id="pct-communication">0%</div></div>
-          <div class="bar"><div>🧩 Roles</div><div class="track"><span class="fill" id="bar-roles"></span></div><div class="pct" id="pct-roles">0%</div></div>
-        </div>
-        <p class="hint">Use the results to segue into how decomposition clarifies <em>timeboxes</em>, <em>interfaces</em>, and <em>responsibilities</em>.</p>
-      </div>
-    </section>
-
-    <!-- 5. Final Section: Takeaways -->
-    <section class="slide" data-title="Takeaways & Insights">
-      <div class="card">
-        <h2 class="title">Takeaways & Insights</h2>
-        <div class="grid cols-2">
-          <div>
-            <ul class="list">
-              <li><strong>Value:</strong> navigating complexity reduces risk and increases delivery confidence.</li>
-              <li><strong>Challenge:</strong> uncertainty and interdependence make plans fragile.</li>
-              <li><strong>Approach:</strong> structure work, visualize dependencies, iterate, and learn.</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <div class="kpi"><span class="dot"></span><strong>Discussion prompt</strong></div>
-            <ul class="list">
-              <li>Which decomposition strategy resonated most?</li>
-              <li>Where could you shorten feedback loops in your projects?</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Key Lesson -->
-    <section class="slide" data-title="Key Lesson">
-      <div class="card">
-        <h2 class="title">Key Lesson</h2>
-        <p class="lead"><strong>Breaking complexity into structure leads to clarity and success.</strong> When systems, stakeholders, and uncertainty multiply, <em>decompose, visualize, and iterate</em>.</p>
-        <div class="stack">
-          <span class="badge">🧭 navigate</span>
-          <span class="badge">🗺️ map</span>
-          <span class="badge">🔁 iterate</span>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="stack">
-      <span class="pill">← / → to navigate</span>
-      <span class="pill">S to toggle notes</span>
-      <span class="pill">T to start/stop timer</span>
-    </div>
-    <div class="progress" style="width:min(460px,40vw)"><span id="progFooter"></span></div>
-  </footer>
-
-  <!-- Presenter notes drawer -->
-  <aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="container">
     <header>
-      <div class="brand"><span class="dot"></span><h1>Presenter Notes</h1></div>
-      <div class="controls"><button class="btn-ghost" id="closeNotes">Close</button></div>
+      <h1>Navigating Complexity</h1>
+      <div class="subtitle">A practical, audience‑ready deck that matches the governance template’s look & navigation</div>
+      <div class="authors">
+        <div class="author">Mohammad Umar Ansari</div>
+        <div class="author">Fernando Olvera</div>
+        <div class="author">Tehreem Butt</div>
+        <div class="author">Luis Medina</div>
+      </div>
     </header>
-    <div style="padding:0 1rem 1rem">
-      <textarea id="notes" placeholder="Type your speaker notes for the current slide here… (saved locally in this browser)"></textarea>
-      <p class="hint">Notes are stored per slide in your browser only.</p>
+
+    <div class="content">
+      <div class="sidebar">
+        <h3>Presentation Sections</h3>
+        <div class="nav-item active" data-target="s1"><i class="fas fa-file-alt"></i> Introduction</div>
+        <div class="nav-item" data-target="s2"><i class="fas fa-lightbulb"></i> Why it matters</div>
+        <div class="nav-item" data-target="s3"><i class="fas fa-landmark"></i> Case Study: Arts Council IT</div>
+        <div class="nav-item" data-target="s4"><i class="fas fa-sitemap"></i> Complexities & Lessons</div>
+        <div class="nav-item" data-target="s5"><i class="fas fa-gamepad"></i> Dead Space — Overview</div>
+        <div class="nav-item" data-target="s6"><i class="fas fa-tools"></i> Dead Space — Tactics & Insights</div>
+        <div class="nav-item" data-target="s7"><i class="fas fa-dragon"></i> Tentacle Grab — Scene</div>
+        <div class="nav-item" data-target="s8"><i class="fas fa-check-double"></i> Tentacle Grab — Solutions & Lessons</div>
+        <div class="nav-item" data-target="s9"><i class="fas fa-video"></i> Embedded Video</div>
+        <div class="nav-item" data-target="s10"><i class="fas fa-circle-question"></i> Final Quiz</div>
+        <div class="nav-item" data-target="s11"><i class="fas fa-handshake"></i> Thank You</div>
+      </div>
+
+      <div class="main-content">
+        <!-- Slide 1: Introduction (from document) -->
+        <section class="section active" id="s1">
+          <h2>Introduction: Navigating Complexity</h2>
+          <div class="card"><b>PMI definition</b>: Complexity is a characteristic of a project, program, or its environment that is difficult to manage, arising from <b>human behavior</b>, <b>system behavior</b>, and <b>ambiguity</b>.</div>
+
+          <div class="cols cols-2">
+            <div>
+              <h3>Sources of complexity</h3>
+              <ul>
+                <li><b>Human behavior</b> — coordination, incentives, communication, decision styles.</li>
+                <li><b>System behavior</b> — many parts interacting, technical constraints, integration effects.</li>
+                <li><b>Ambiguity</b> — shifting goals/constraints, incomplete information, uncertainty.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>How to navigate (competencies)</h3>
+              <ul>
+                <li>Apply <b>critical thinking</b> to form appropriate action plans.</li>
+                <li>Practice <b>effective communication</b> across stakeholders.</li>
+                <li><b>Research</b> the program/project prior to approval.</li>
+                <li>Select & <b>tailor approaches, tools, and techniques</b> to context.</li>
+                <li>Maintain <b>preparedness, awareness, and vigilance</b>.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Creative vision vs technical reality</h3>
+            <p>Designers envisioned a fully integrated, cinematic pull‑sequence under player control. In practice, unstable camera tracking <b>desynced animations</b> and <b>caused frame drops</b>, revealing engine limits under deadline pressure.</p>
+          </div>
+        </section>
+
+        <!-- Slide 2: Why it matters (from document) -->
+        <section class="section" id="s2">
+          <h2>Why this matters in Project Management</h2>
+          <div class="card">Complexity is <b>inevitable</b>: projects increasingly involve <b>diverse teams</b>, <b>evolving technologies</b>, and <b>unexpected situations</b>.</div>
+          <ul>
+            <li>Helps teams <b>anticipate challenges</b> instead of reacting late.</li>
+            <li>Enables <b>informed decisions</b> under uncertainty.</li>
+            <li>Maintains <b>alignment</b> across stakeholders to achieve success.</li>
+          </ul>
+          <div class="card"><b>In one sentence</b>: Navigating complexity means leading with <b>adaptability</b> and <b>insight</b> to keep projects on course amid uncertainty and provide clarity when it is most needed.</div>
+        </section>
+
+        <!-- Slide 3: Case Study Overview (Arts Council IT) -->
+        <section class="section" id="s3">
+          <h2>Case Study: Irish Arts Council — Business Transformation Project</h2>
+          <div class="card"><b>Scope & Objective</b>: Upgrade and integrate <b>five separate IT systems</b> (including the <b>grants processing</b> system) into a single platform.</div>
+          <div class="cols cols-2">
+            <div class="card">
+              <h3>Timeline</h3>
+              <ul>
+                <li><b>April 2020</b> — Project initiated.</li>
+                <li><b>September 2022</b> — Target delivery (already slipped by ~1 year).</li>
+                <li><b>June 2024</b> — Project fully discontinued after consultant review and board discussion.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Budget</h3>
+              <ul>
+                <li>Initial estimate: <b>€2.87M</b> (~$3.3M).</li>
+                <li>Total spent at cancellation: <b>€6.7M</b> (~$7.8M).</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Key Statements & Actions</h3>
+            <ul>
+              <li><b>Minister Patrick O’Donovan</b>: Initial departmental review found the Arts Council was <em>not prepared for the scale</em> of the project and <em>did not assign adequate resources</em>.</li>
+              <li><b>Director Maureen Kennelly</b>: Multiple factors contributed; reliance on <b>external contractors</b> due to limited internal capacity.</li>
+              <li>As delivery neared (<b>Sep 2022</b>), <b>numerous bugs</b> were discovered; contracts with <b>testers and developers were terminated</b>.</li>
+              <li>Developers, <b>project governance</b>, and <b>management structure</b> were changed in response.</li>
+              <li>External consultants later concluded the system was <b>too flawed to correct</b> in a reasonable timeframe → decision to cancel (<b>Jun 2024</b>).</li>
+            </ul>
+          </div>
+          <p class="small" style="color:#6b7280; margin-top:6px">Refs (from case doc): Irish Times coverage on project cost overrun and cancellation; legal action report links included in source document.</p>
+        </section>
+
+        <!-- Slide 4: Complexities & Lessons -->
+        <section class="section" id="s4">
+          <h2>Complexities & Lessons</h2>
+          <div class="cols cols-2">
+            <div>
+              <h3>Complexities present</h3>
+              <ul>
+                <li><b>Technical</b>: Merging outdated/legacy systems into one unified platform; late discovery of defects.</li>
+                <li><b>Organizational</b>: Multi‑department workflows with differing requirements; governance and management structure in flux.</li>
+                <li><b>Resource/Capability gaps</b>: Insufficient internal capacity and technical oversight for the project’s scale; heavy reliance on contractors.</li>
+                <li><b>Temporal/Strategic drift</b>: Extended timelines, rising costs, and shifting objectives undermined coherence and oversight.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Lessons highlighted</h3>
+              <ul>
+                <li>Build <b>readiness & capacity</b> early (skills, governance, clear ownership and decision rights).</li>
+                <li>De‑risk <b>integration</b> via prototypes, staged rollouts, and independent QA to surface defects sooner.</li>
+                <li>Maintain a firm <b>decision cadence</b> and <b>scope discipline</b> to curb drift.</li>
+                <li>Use <b>transparent checkpoints</b> and act on evidence—avoid late, large‑scale changes without capacity.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card" style="margin-top:12px"><b>Case insight</b>: The interplay of <em>legacy integration</em>, <em>organizational readiness</em>, and <em>governance capacity</em> overwhelmed the initiative—illustrating how unmanaged complexity can stall transformation despite significant spend.</div>
+        </section>
+
+        <!-- Slide 5: Real-World Example — Dead Space Tentacle Grab -->
+        <section class="section" id="s5">
+          <h2>Real‑World Example: "How Dead Space's Scariest Scene Almost Killed the Game"</h2>
+          <div class="card"><b>Project Overview</b>: <b>Dead Space</b> by <b>Visceral Games</b>. A highly ambitious set‑piece (the Tentacle Grab) became a focal point of complexity during a tough development cycle.</div>
+          <div class="cols cols-2">
+            <div class="card">
+              <h3>Why it was complex</h3>
+              <ul>
+                <li>High creative ambition: cinematic horror & immersion.</li>
+                <li>Many moving parts: gameplay systems, visuals, sound, narrative, engine performance.</li>
+                <li>Tight schedules and resource constraints.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Key complexities</h3>
+              <ul>
+                <li><b>Technical</b>: lighting, particles, mechanics, and performance optimization.</li>
+                <li><b>Cross‑team coordination</b>: animation, audio, level design, engineering synchronization.</li>
+                <li><b>Risk of failure</b>: flagship scene tied to deadlines & team morale.</li>
+                <li><b>Iterative churn</b>: repeated testing, failure, and rework.</li>
+                <li><b>Simplification challenge</b>: balancing ambition vs feasibility.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <h3>How this adds value</h3>
+            <ul>
+              <li>Connects theory (complexity sources) to shipped results.</li>
+              <li>Builds reflexes for de‑risking: prototype, prioritize, integrate, iterate.</li>
+              <li>Improves team alignment and decision speed under pressure.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Slide 6: Managing the Complexity — Tactics & Lessons -->
+        <section class="section" id="s6">
+          <h2>Managing the Complexity — Tactics & Insights</h2>
+          <div class="cols cols-2">
+            <div class="card">
+              <h3>What they did</h3>
+              <ul>
+                <li><b>Tools & process</b>: real‑time engine tooling; version control; frequent integration & playtests.</li>
+                <li><b>Simplification</b>: break the scene into milestones; prioritize must‑deliver; defer nice‑to‑have.</li>
+                <li><b>Coordination</b>: leads held the big picture; regular art‑audio‑gameplay alignment.</li>
+                <li><b>Risk mitigation</b>: early prototypes; fallback options; monitor performance & bug counts.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Outcome & takeaways</h3>
+              <ul>
+                <li>Delivered a standout horror moment that resonated with players.</li>
+                <li>Avoided major timing/performance failures via coordination.</li>
+                <li><b>Key takeaways</b>:
+                  <ul>
+                    <li>Break complex tasks into smaller pieces.</li>
+                    <li>Prioritize essentials over extras.</li>
+                    <li>Cross‑team alignment reduces rework.</li>
+                    <li>Use tools & feedback loops to iterate.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="cols cols-2" style="margin-top:12px">
+            <div class="card">
+              <h3>Common challenges</h3>
+              <ul>
+                <li>Ambiguous roles & responsibilities.</li>
+                <li>Over‑ambitious scope vs capacity.</li>
+                <li>Poor cross‑team communication; hidden interdependencies.</li>
+                <li>Inefficient tools or workflows; resistance to scope reduction.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Success factors & next steps</h3>
+              <ul>
+                <li>Leadership & shared vision; frequent integration/testing; milestone slicing.</li>
+                <li>Prioritization/flexibility; reliable tools; feedback loops.</li>
+                <li><b>Personal insights</b>: test riskiest part first; weekly syncs; must‑have vs nice‑to‑have; pair for skill‑sharing.</li>
+                <li><b>Next steps</b>: add visuals, prepare 1‑question poll (QR), assign sections, rehearse timing.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 7: Tentacle Grab — Scene & Complexity (from Report) -->
+        <section class="section" id="s7">
+          <h2>Tentacle Grab — The Scene & Why It Was So Complex</h2>
+          <div class="card"><b>Game</b>: <em>Dead Space</em> · <b>Developer</b>: Visceral Games</div>
+          <div class="card"><b>The scene</b>: a cinematic, <b>player‑controlled</b> horror sequence where a tentacle drags the player while real‑time <b>animation</b>, <b>camera</b>, <b>physics</b>, and <b>sound</b> all fire together.</div>
+          <div class="cols cols-2">
+            <div class="card">
+              <h3>Departments involved</h3>
+              <ul>
+                <li>Animation & camera</li>
+                <li>Lighting & VFX/particles</li>
+                <li>Physics & gameplay programming</li>
+                <li>Sound & music</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>What made it fragile</h3>
+              <ul>
+                <li>Real‑time camera tracking instability could desync animations.</li>
+                <li>Particles/physics strained the engine → frame drops.</li>
+                <li>Any timing mismatch <b>broke immersion</b> and the whole scene.</li>
+                <li>Creative vision outpaced technical reality under deadline pressure.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 8: Tentacle Grab — Solutions, Result, Lessons (from Report) -->
+        <section class="section" id="s8">
+          <h2>Tentacle Grab — How They Solved It & Lessons</h2>
+          <div class="cols cols-2">
+            <div class="card">
+              <h3>What the team did</h3>
+              <ul>
+                <li>Broke the problem into smaller parts; built <b>early prototypes</b> to tune timing.</li>
+                <li><b>Reduced non‑essential effects</b> to stabilize performance.</li>
+                <li>Maintained <b>frequent cross‑team syncs</b> to align animation, camera, physics, and audio.</li>
+                <li><b>Prioritized</b> essentials vs. simplifiable elements.</li>
+              </ul>
+              <h3 style="margin-top:10px">Final result</h3>
+              <ul>
+                <li>Balanced <b>technical stability</b> with <b>cinematic quality</b> after multiple test passes.</li>
+                <li>The Tentacle Grab shipped as a <b>memorable, unsettling</b> set‑piece.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Lessons</h3>
+              <ul>
+                <li>Break big problems into smaller parts.</li>
+                <li>Communicate early and often across teams.</li>
+                <li>Simplify ambitious goals without losing the core vision.</li>
+                <li>Test early, iterate fast, and adapt.</li>
+              </ul>
+              <h3 style="margin-top:10px">Recommended visuals to capture</h3>
+              <ul>
+                <li>Early concept/setup of the scene</li>
+                <li>Behind‑the‑scenes sync discussions</li>
+                <li>Debug/prototype footage showing broken states</li>
+                <li>Lighting & sound integration moments</li>
+                <li>Final scene in action</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 9: Embedded Video (replace src with your hosted link) -->
+        <section class="section" id="s9">
+            <h2>Embedded Video — Demo / Interview Clip</h2>
+            <div class="video-wrap">
+                <iframe src="https://player.vimeo.com/video/1131116676?badge=0&amp;title=0&amp;byline=0&amp;portrait=0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                        allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Slide 10: Final Quiz (10 questions) -->
+        <section class="section" id="s10">
+          <h2>Final Check — 10‑Question Multiple Choice Quiz</h2>
+          <div class="card">Select one answer per question, then click <b>Check Answers</b>. This is a quick, easy wrap‑up.</div>
+          <form id="quizForm">
+            <div class="card" data-q="q1">
+              <h3>1) PMI says complexity mainly comes from:</h3>
+              <label><input type="radio" name="q1" value="A"> Budget, holidays, weather</label><br>
+              <label><input type="radio" name="q1" value="B"> Human behavior, system behavior, ambiguity</label><br>
+              <label><input type="radio" name="q1" value="C"> Marketing, sales, finance</label><br>
+              <label><input type="radio" name="q1" value="D"> Only technology choices</label>
+            </div>
+
+            <div class="card" data-q="q2">
+              <h3>2) Navigating complexity means leading with:</h3>
+              <label><input type="radio" name="q2" value="A"> More scope and features</label><br>
+              <label><input type="radio" name="q2" value="B"> Adaptability and insight under uncertainty</label><br>
+              <label><input type="radio" name="q2" value="C"> Micromanagement and strict rules</label><br>
+              <label><input type="radio" name="q2" value="D"> Eliminating stakeholders</label>
+            </div>
+
+            <div class="card" data-q="q3">
+              <h3>3) The Arts Council project tried to integrate how many legacy systems?</h3>
+              <label><input type="radio" name="q3" value="A"> 3</label><br>
+              <label><input type="radio" name="q3" value="B"> 4</label><br>
+              <label><input type="radio" name="q3" value="C"> 5</label><br>
+              <label><input type="radio" name="q3" value="D"> 7</label>
+            </div>
+
+            <div class="card" data-q="q4">
+              <h3>4) Amount spent when that project was canceled:</h3>
+              <label><input type="radio" name="q4" value="A"> €2.87M</label><br>
+              <label><input type="radio" name="q4" value="B"> €6.7M</label><br>
+              <label><input type="radio" name="q4" value="C"> €9.1M</label><br>
+              <label><input type="radio" name="q4" value="D"> €1.2M</label>
+            </div>
+
+            <div class="card" data-q="q5">
+              <h3>5) A key cause in the case was:</h3>
+              <label><input type="radio" name="q5" value="A"> Too many internal engineers</label><br>
+              <label><input type="radio" name="q5" value="B"> Heavy reliance on external contractors</label><br>
+              <label><input type="radio" name="q5" value="C"> Excessively fast decisions</label><br>
+              <label><input type="radio" name="q5" value="D"> Over‑testing prototypes</label>
+            </div>
+
+            <div class="card" data-q="q6">
+              <h3>6) In the Tentacle Grab, what had to sync tightly?</h3>
+              <label><input type="radio" name="q6" value="A"> Finance, HR, Legal</label><br>
+              <label><input type="radio" name="q6" value="B"> Animation, camera, physics, sound</label><br>
+              <label><input type="radio" name="q6" value="C"> Marketing, sales, community</label><br>
+              <label><input type="radio" name="q6" value="D"> Only level design</label>
+            </div>
+
+            <div class="card" data-q="q7">
+              <h3>7) A fragility factor in the scene was:</h3>
+              <label><input type="radio" name="q7" value="A"> Overly simple camera work</label><br>
+              <label><input type="radio" name="q7" value="B"> Camera tracking instability causing animation desync</label><br>
+              <label><input type="radio" name="q7" value="C"> No particle effects</label><br>
+              <label><input type="radio" name="q7" value="D"> Unlimited engine performance</label>
+            </div>
+
+            <div class="card" data-q="q8">
+              <h3>8) Which tactic helped the team manage complexity?</h3>
+              <label><input type="radio" name="q8" value="A"> Add more effects late</label><br>
+              <label><input type="radio" name="q8" value="B"> Build early prototypes and prune non‑essentials</label><br>
+              <label><input type="radio" name="q8" value="C"> Wait to integrate until the end</label><br>
+              <label><input type="radio" name="q8" value="D"> Ignore performance issues</label>
+            </div>
+
+            <div class="card" data-q="q9">
+              <h3>9) A success factor that reduces rework is:</h3>
+              <label><input type="radio" name="q9" value="A"> Cross‑team alignment and frequent integration</label><br>
+              <label><input type="radio" name="q9" value="B"> Big‑bang releases</label><br>
+              <label><input type="radio" name="q9" value="C"> Hiding metrics and CTAs</label><br>
+              <label><input type="radio" name="q9" value="D"> Deferring decisions</label>
+            </div>
+
+            <div class="card" data-q="q10">
+              <h3>10) First step when facing a complex problem:</h3>
+              <label><input type="radio" name="q10" value="A"> Add more scope</label><br>
+              <label><input type="radio" name="q10" value="B"> Break it into smaller parts and prototype the riskiest piece</label><br>
+              <label><input type="radio" name="q10" value="C"> Avoid talking to stakeholders</label><br>
+              <label><input type="radio" name="q10" value="D"> Finalize everything before testing</label>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:10px">
+              <button type="button" id="checkQuiz">Check Answers</button>
+              <button type="button" id="resetQuiz" style="background:#e5e7eb;color:#111">Reset</button>
+            </div>
+            <p id="quizResult" style="font-weight:600;margin-top:10px"></p>
+          </form>
+        </section>
+
+        <!-- Slide 11: Thank You / Q&A -->
+        <section class="section" id="s11">
+          <h2>Thank You</h2>
+        </section>
+
+        <!-- Slide 7: How This Adds Value -->
+        
+
+        <!-- Slide 8: Common Challenges to Managing Complexity -->
+        
+
+        <!-- Slide 9: Success Factors -->
+        
+
+        <!-- Slide 10: Personal Insights & Our Team's Perspective -->
+        
+
+        <!-- Slide 11: Next Steps -->
+        
+      </div>
     </div>
-  </aside>
-</div>
 
-<script>
-  // --- Slide nav ---
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  let idx = 0;
-  const deck = document.getElementById('deck');
-  const prog = document.getElementById('prog');
-  const progFooter = document.getElementById('progFooter');
-  function show(i){
-    idx = Math.max(0, Math.min(slides.length-1, i));
-    slides.forEach((s,j)=>s.classList.toggle('active', j===idx));
-    const pct = ((idx+1)/slides.length*100).toFixed(1)+'%';
-    if(prog) prog.style.width = pct; if(progFooter) progFooter.style.width = pct;
-    loadNotes();
-  }
-  function next(){ show(idx+1)}
-  function prev(){ show(idx-1)}
-  document.getElementById('nextBtn').onclick=next;
-  document.getElementById('prevBtn').onclick=prev;
-  addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight') next();
-    if(e.key==='ArrowLeft') prev();
-    if(e.key.toLowerCase()==='s') toggleNotes();
-    if(e.key.toLowerCase()==='t') toggleTimer();
-  });
+    <div class="navigation">
+      <button id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+      <button id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </div>
 
-  // --- Segment timer ---
-  const clock = document.getElementById('clock');
-  let timer=null, startTs=null, target=0; // target in seconds
-  function fmt(sec){const m=Math.floor(sec/60), s=Math.floor(sec%60);return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
-  function guessTarget(){
-    const t = slides[idx]?.dataset.title||'';
-    if(t.includes('Part 1')) return 3*60; // 3 minutes
-    if(t.includes('Part 2')) return 7*60; // 7 minutes
-    return 0;
-  }
-  function tick(){
-    const elapsed = (Date.now()-startTs)/1000; const remaining = Math.max(0, target? (target-elapsed): elapsed);
-    clock.textContent = fmt(remaining);
-    if(target && remaining<=0){ clearInterval(timer); timer=null; flash(clock) }
-  }
-  function flash(el){ el.animate([{opacity:1},{opacity:.1},{opacity:1}],{duration:900,iterations:4}) }
-  function toggleTimer(){
-    if(timer){ clearInterval(timer); timer=null; return }
-    target = guessTarget(); startTs = Date.now(); timer=setInterval(tick,200); tick();
-  }
-  document.getElementById('timerBtn').onclick=toggleTimer;
+  <script>
+    // Match the navigation behavior from the governance deck
+    document.addEventListener('DOMContentLoaded', function(){
+      const navItems = Array.from(document.querySelectorAll('.nav-item'));
+      const sections = Array.from(document.querySelectorAll('.section'));
+      const idToIndex = new Map(sections.map((s, idx) => [s.id, idx]));
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
 
-  // --- Presenter notes (localStorage per slide) ---
-  const drawer = document.getElementById('drawer');
-  const notesEl = document.getElementById('notes');
-  function keyFor(i){return `notes_slide_${i}`}
-  function toggleNotes(){ drawer.classList.toggle('open'); drawer.setAttribute('aria-hidden', !drawer.classList.contains('open')) }
-  function loadNotes(){ notesEl.value = localStorage.getItem(keyFor(idx))||'' }
-  notesEl?.addEventListener('input',()=> localStorage.setItem(keyFor(idx), notesEl.value));
-  document.getElementById('notesBtn').onclick=toggleNotes;
-  document.getElementById('closeNotes').onclick=toggleNotes;
+      let current = sections.findIndex(s => s.classList.contains('active'));
+      if (current < 0) current = 0;
 
-  // --- Export (print to PDF) ---
-  document.getElementById('printBtn').onclick=()=> window.print();
+      function goTo(index){
+        if (index < 0 || index >= sections.length) return;
+        current = index;
+        sections.forEach((s,i)=> s.classList.toggle('active', i === current));
+        const currentId = sections[current].id;
+        navItems.forEach(n => n.classList.toggle('active', n.dataset.target === currentId));
+        if (prevBtn) prevBtn.disabled = current === 0;
+        if (nextBtn) nextBtn.disabled = current === sections.length - 1;
+        const mc = document.querySelector('.main-content');
+        if (mc) mc.scrollTop = 0;
+      }
 
-  // --- Reveal chosen Option (Part 2) ---
-  document.querySelectorAll('[data-reveal]').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const tag = btn.getAttribute('data-reveal');
-      slides.forEach(s=>{ if(s.dataset.opt){ s.style.display = (s.dataset.opt===tag)? 'block':'none' } });
-      // Jump to first matching slide
-      const i = slides.findIndex(s=> s.dataset.opt===tag);
-      if(i>=0) show(i);
-    })
-  })
+      navItems.forEach((n)=>{
+        n.addEventListener('click', ()=>{
+          const targetId = n.dataset.target;
+          const idx = idToIndex.has(targetId) ? idToIndex.get(targetId) : navItems.indexOf(n);
+          goTo(idx);
+        });
+      });
 
-  // --- Poll logic ---
-  const state = { time:0, communication:0, roles:0 };
-  const total = ()=> state.time + state.communication + state.roles;
-  function updateBars(){
-    const sum = total()||1;
-    ['time','communication','roles'].forEach(k=>{
-      const pct = Math.round(state[k]*100/sum);
-      const fill = document.getElementById(`bar-${k}`);
-      const label = document.getElementById(`pct-${k}`);
-      if(fill){ fill.style.width = pct+'%'; }
-      if(label){ label.textContent = pct+'%'; }
+      if (prevBtn) prevBtn.addEventListener('click', ()=> goTo(current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', ()=> goTo(current + 1));
+
+      goTo(current);
     });
-  }
-  document.querySelectorAll('[data-vote]').forEach(btn=>{
-    btn.addEventListener('click',()=>{ const k = btn.getAttribute('data-vote'); state[k]++; updateBars(); })
-  })
-  document.getElementById('resetPoll').onclick=()=>{ state.time=state.communication=state.roles=0; updateBars(); }
+    // Quiz logic (no style changes)
+  (function(){
+    const key={q1:'B',q2:'B',q3:'C',q4:'B',q5:'B',q6:'B',q7:'B',q8:'B',q9:'A',q10:'B'};
+    const form=document.getElementById('quizForm');
+    if(!form) return;
+    const result=document.getElementById('quizResult');
+    const check=document.getElementById('checkQuiz');
+    const reset=document.getElementById('resetQuiz');
 
-  // Initialize
-  show(0); updateBars();
-</script>
+    function clearMarks(){
+      form.querySelectorAll('[data-q]').forEach(c=>{c.style.borderLeftColor='';c.style.background='';});
+      result.textContent='';
+    }
+
+    check.addEventListener('click',()=>{
+      let score=0,total=Object.keys(key).length;
+      clearMarks();
+      for(const q in key){
+        const block=form.querySelector(`[data-q="${q}"]`);
+        const checked=form.querySelector(`input[name="${q}"]:checked`);
+        if(!checked){block.style.borderLeftColor='#ef4444';block.style.background='#fee2e2';continue;}
+        if(checked.value===key[q]){score++;block.style.borderLeftColor='#22c55e';block.style.background='#f0fdf4';}
+        else{block.style.borderLeftColor='#ef4444';block.style.background='#fee2e2';}
+      }
+      result.textContent=`You scored ${score} / ${total}`;
+    });
+
+    reset.addEventListener('click',()=>{form.reset();clearMarks();});
+  })();
+  </script>
 </body>
 </html>
